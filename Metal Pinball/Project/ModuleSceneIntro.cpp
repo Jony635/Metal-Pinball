@@ -31,7 +31,7 @@ bool ModuleSceneIntro::Start()
 	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
 	in_Game = App->textures->Load("Resources/textures/in-game.png");
 
-	//sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT, SCREEN_WIDTH, 50);
+	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50);
 
 	int in_game1[126] = {
 		375, 741,
@@ -240,6 +240,8 @@ bool ModuleSceneIntro::Start()
 	chains.add(App->physics->CreateChain(0, 0, in_game5, 20, b2_staticBody));
 	chains.add(App->physics->CreateChain(0, 0, in_game6, 18, b2_staticBody));
 
+
+
 	return ret;
 }
 
@@ -293,15 +295,15 @@ update_status ModuleSceneIntro::Update()
 		c = c->next;
 	}
 
-	c = chains.getFirst();
+	//c = chains.getFirst();
 
-	while(c != NULL)
-	{
-		int x, y;
-		c->data->GetPosition(x, y);
-		App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
-		c = c->next;
-	}
+	//while(c != NULL)
+	//{
+	//	int x, y;
+	//	c->data->GetPosition(x, y);
+	//	App->renderer->Blit(rick, x, y, NULL, 1.0f, c->data->GetRotation());
+	//	c = c->next;
+	//}
 
 	// ray -----------------
 	if(ray_on == true)
@@ -324,6 +326,8 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	int x, y;
 
 	App->audio->PlayFx(bonus_fx);
+
+	
 
 	/*
 	if(bodyA)
@@ -399,5 +403,7 @@ void ModuleSceneIntro::CheckInputs()
 
 		chains.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
 	}
+	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	App->physics->CreateCircle(380, 650, 15);
 }
 
