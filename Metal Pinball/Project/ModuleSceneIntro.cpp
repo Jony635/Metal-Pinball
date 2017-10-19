@@ -28,8 +28,17 @@ bool ModuleSceneIntro::Start()
 	circle = App->textures->Load("pinball/wheel.png");
 	box = App->textures->Load("pinball/crate.png");
 	rick = App->textures->Load("pinball/rick_head.png");
-	bonus_fx = App->audio->LoadFx("pinball/bonus.wav");
+
+	coin_gold = App->audio->LoadFx("Resources/audios/fx/coin_gold.wav");
+	coin_green = App->audio->LoadFx("Resources/audios/fx/coin_green.wav");
+	coin_red = App->audio->LoadFx("Resources/audios/fx/coin_red.wav");
+	launch = App->audio->LoadFx("Resources/audios/fx/launch.wav");
+	lose = App->audio->LoadFx("Resources/audios/fx/lose.wav");
+
+	App->audio->PlayMusic("Resources/audios/music/soundtrack.ogg",-1);
+
 	in_Game = App->textures->Load("Resources/textures/in-game.png");
+
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50);
 
@@ -325,9 +334,8 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
 
-	App->audio->PlayFx(bonus_fx);
+	App->audio->PlayFx(coin_green);
 
-	
 
 	/*
 	if(bodyA)
@@ -342,6 +350,7 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
 	}*/
 }
+
 
 void ModuleSceneIntro::CheckInputs()
 {
@@ -403,7 +412,9 @@ void ModuleSceneIntro::CheckInputs()
 
 		chains.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
 	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
 	App->physics->CreateCircle(380, 650, 15);
+
 }
 

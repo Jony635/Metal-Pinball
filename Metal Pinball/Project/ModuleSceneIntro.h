@@ -32,7 +32,13 @@ public:
 
 	SDL_Texture* in_Game=nullptr;
 
-	uint bonus_fx;
+	uint coin_gold;
+	uint coin_red;
+	uint coin_green;
+	uint launch;
+	uint lose;
+
+
 	p2Point<int> ray;
 	bool ray_on;
 };
