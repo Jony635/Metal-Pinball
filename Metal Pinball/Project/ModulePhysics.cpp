@@ -32,8 +32,8 @@ bool ModulePhysics::Start()
 	world->SetContactListener(this);
 
 	// needed to create joints like mouse joint
-	/*b2BodyDef bd;
-	ground = world->CreateBody(&bd);*/
+	b2BodyDef bd;
+	ground = world->CreateBody(&bd);
 
 	// big static circle as "ground" in the middle of the screen
 	/*int x = SCREEN_WIDTH / 2;
