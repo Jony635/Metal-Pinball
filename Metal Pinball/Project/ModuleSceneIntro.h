@@ -17,6 +17,7 @@ public:
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
+	void CheckInputs();
 public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
@@ -25,9 +26,12 @@ public:
 	PhysBody* sensor;
 	bool sensed;
 
-	SDL_Texture* circle;
-	SDL_Texture* box;
-	SDL_Texture* rick;
+	SDL_Texture* circle = nullptr;
+	SDL_Texture* box = nullptr;
+	SDL_Texture* rick = nullptr;
+
+	SDL_Texture* in_Game=nullptr;
+
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
