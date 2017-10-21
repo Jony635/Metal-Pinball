@@ -26,9 +26,7 @@ public:
 
 	bool sensed;
 
-	SDL_Texture* circle = nullptr;
-	SDL_Texture* box = nullptr;
-	SDL_Texture* rick = nullptr;
+	SDL_Texture* items_tex = nullptr;
 
 	SDL_Texture* in_Game=nullptr;
 
