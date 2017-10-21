@@ -43,7 +43,8 @@ bool ModuleSceneIntro::Start()
 	in_Game = App->textures->Load("Resources/textures/in-game.png");
 
 	//Killer
-	sensors.add(App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50));
+	sensors.add(App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50))->data->type=ItemType::KILLER;
+	
 
 	//Greens
 	sensors.add(App->physics->CreateCircleSensor(203, 397, 14.5));
