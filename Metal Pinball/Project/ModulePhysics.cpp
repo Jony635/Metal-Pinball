@@ -155,7 +155,7 @@ PhysBody* ModulePhysics::CreateCircleSensor(int x, int y, int radius)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	body.position.Set(PIXEL_TO_METERS(x)+PIXEL_TO_METERS(radius), PIXEL_TO_METERS(y) + PIXEL_TO_METERS(radius));
 
 	b2Body* b = world->CreateBody(&body);
 
