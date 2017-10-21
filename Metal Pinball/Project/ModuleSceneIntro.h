@@ -22,8 +22,8 @@ public:
 	p2List<PhysBody*> circles;
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> chains;
+	p2List<PhysBody*> sensors;
 
-	PhysBody* sensor;
 	bool sensed;
 
 	SDL_Texture* circle = nullptr;
