@@ -35,7 +35,6 @@ bool ModuleSceneIntro::Start()
 	coin_red = App->audio->LoadFx("Resources/audios/fx/coin_red.wav");
 	launch = App->audio->LoadFx("Resources/audios/fx/launch.wav");
 	lose = App->audio->LoadFx("Resources/audios/fx/lose.wav");
-
 	App->audio->PlayMusic("Resources/audios/music/soundtrack.ogg",-1);
 
 	items_tex = App->textures->Load("Resources/textures/items.png");
@@ -298,7 +297,7 @@ update_status ModuleSceneIntro::Update()
 	fVector normal(0.0f, 0.0f);
 
 	// All draw functions ------------------------------------------------------
-	p2List_item<PhysBody*>* c = App->player->balls.getFirst();
+	p2List_item<PhysBody*>* c = circles.getFirst();
 
 	/*while(c != NULL)
 	{
@@ -306,12 +305,7 @@ update_status ModuleSceneIntro::Update()
 		c->data->GetPosition(x, y);
 		if(c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
 		{
-			SDL_Rect rec;
-			rec.x = 0;
-			rec.y = 0;
-			rec.w = 21;
-			rec.h = 21;
-			App->renderer->Blit(items_tex, x, y, &rec, 1.0f);
+			App->renderer->Blit(circle, x, y, NULL, 1.0f);
 
 		}
 		c = c->next;
@@ -339,7 +333,7 @@ update_status ModuleSceneIntro::Update()
 	{
 		int x, y;
 		c->data->GetPosition(x, y);
-		App->renderer->Blit(App->player->texture, x, y, &ball, 1.0f);
+		App->renderer->Blit(App->player->items_tex, x, y, &ball, 1.0f);
 		c = c->next;
 	}
 

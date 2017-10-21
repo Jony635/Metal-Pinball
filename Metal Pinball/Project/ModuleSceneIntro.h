@@ -26,7 +26,6 @@ public:
 
 	bool sensed;
 
-	SDL_Texture* items_tex = nullptr;
 
 	SDL_Texture* in_Game=nullptr;
 

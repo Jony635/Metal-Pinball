@@ -24,7 +24,7 @@ public:
 
 public:
 
-	SDL_Texture* texture = nullptr;
+	SDL_Texture* items_tex = nullptr;
 	p2List<PhysBody*> balls;
 	int lives;
 	uint score;
