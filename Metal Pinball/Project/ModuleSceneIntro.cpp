@@ -6,6 +6,7 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include "ModulePlayer.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -301,6 +302,16 @@ update_status ModuleSceneIntro::Update()
 			if(hit >= 0)
 				ray_hit = hit;
 		}
+		c = c->next;
+	}
+
+	c = App->player->balls.getFirst();
+	SDL_Rect ball = { 0,0,20,21 };
+	while (c != NULL)
+	{
+		int x, y;
+		c->data->GetPosition(x, y);
+		App->renderer->Blit(App->player->texture, x, y, &ball, 1.0f, c->data->GetRotation());
 		c = c->next;
 	}
 
