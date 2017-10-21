@@ -151,13 +151,15 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateCircleSensor(int x, int y, int radius)
+PhysBody* ModulePhysics::CreateCircleSensor(int x, int y, int radius, ItemType type)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
+
+	
 
 	b2CircleShape circle;
 	circle.m_radius = PIXEL_TO_METERS(radius);
@@ -172,6 +174,7 @@ PhysBody* ModulePhysics::CreateCircleSensor(int x, int y, int radius)
 	PhysBody* pbody = new PhysBody();
 	pbody->body = b;
 	b->SetUserData(pbody);
+	pbody->type = type;
 	pbody->listener = (Module*)App->scene_intro;
 
 	return pbody;

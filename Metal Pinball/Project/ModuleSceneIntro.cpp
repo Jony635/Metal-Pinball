@@ -46,23 +46,18 @@ bool ModuleSceneIntro::Start()
 	sensors.add(App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50));
 
 	//Greens
-	sensors.add(App->physics->CreateCircleSensor(203, 397, 14.5));
-	sensors.add(App->physics->CreateCircleSensor(106, 310, 14.5));
-	sensors.add(App->physics->CreateCircleSensor(292, 310, 14.5));
-	sensors.add(App->physics->CreateCircleSensor(203, 220, 14.5));
-	sensors.add(App->physics->CreateCircleSensor(140, 25, 14.5));
-	sensors.add(App->physics->CreateCircleSensor(189, 17, 14.5));
-	sensors.add(App->physics->CreateCircleSensor(242, 24, 14.5));
+	sensors.add(App->physics->CreateCircleSensor(203, 397, 14.5, GREEN));
+	sensors.add(App->physics->CreateCircleSensor(106, 310, 14.5, GREEN));
+	sensors.add(App->physics->CreateCircleSensor(292, 310, 14.5, GREEN));
+	sensors.add(App->physics->CreateCircleSensor(203, 220, 14.5, GREEN));
+	sensors.add(App->physics->CreateCircleSensor(140, 25, 14.5, GREEN));
+	sensors.add(App->physics->CreateCircleSensor(189, 17, 14.5, GREEN));
+	sensors.add(App->physics->CreateCircleSensor(242, 24, 14.5, GREEN));
 
 	//Reds
-	sensors.add(App->physics->CreateCircleSensor(121, 136, 18));
-	sensors.add(App->physics->CreateCircleSensor(197, 99, 18));
-	sensors.add(App->physics->CreateCircleSensor(265, 136, 18));
-
-
-
-
-
+	sensors.add(App->physics->CreateCircleSensor(121, 136, 18, RED));
+	sensors.add(App->physics->CreateCircleSensor(197, 99, 18, RED));
+	sensors.add(App->physics->CreateCircleSensor(265, 136, 18, RED));
 
 
 
@@ -365,9 +360,7 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	int x, y;
 
-	App->audio->PlayFx(coin_green);
 
 
 	/*
