@@ -19,13 +19,15 @@ public:
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 	void SpawnBall();
+	void CheckInputs();
+	void CheckDeath();
 
 public:
 
 	SDL_Texture* texture = nullptr;
 	p2List<PhysBody*> balls;
-	uint lives;
+	int lives;
 	uint score;
 
-
+	float RespawnCounter = 0.0f;
 };
