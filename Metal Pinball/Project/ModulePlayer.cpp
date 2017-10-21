@@ -22,7 +22,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 
-	texture = App->textures->Load("Resources/texture/items.png");
+	texture = App->textures->Load("Resources/textures/items.png");
 
 	lives = 3;
 
@@ -43,12 +43,23 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	return UPDATE_CONTINUE;
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		p2List_item<PhysBody*>* c = balls.getFirst();
+		SDL_Rect ball = { 0,0,20,21 };
+		while (c != NULL)
+		{
+			c->data->body->ApplyLinearImpulse({ 0,-1 }, { 0,10 }, true);
+			c = c->next;
+		}
+	}
+		return UPDATE_CONTINUE;
+	
 }
 
 void ModulePlayer::SpawnBall() 
 {
-	balls.add(App->physics->CreateCircle(380, 650, 15));
+	balls.add(App->physics->CreateCircle(380, 650, 10));
 	balls.getLast()->data->listener = this;
 }
 
