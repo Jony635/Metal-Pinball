@@ -12,6 +12,17 @@
 #define METERS_TO_PIXELS(m) ((int) floor(PIXELS_PER_METER * m))
 #define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
 
+enum ItemType 
+{
+	NO_TYPE = -1,
+
+	RED,
+	GREEN,
+	GOLD,
+
+	KILLER
+};
+
 // Small class to return to other modules to track position and rotation of physics bodies
 class PhysBody
 {
@@ -28,6 +39,7 @@ public:
 	int width, height;
 	b2Body* body;
 	Module* listener;
+	ItemType type = NO_TYPE;
 };
 
 // Module --------------------------------------
