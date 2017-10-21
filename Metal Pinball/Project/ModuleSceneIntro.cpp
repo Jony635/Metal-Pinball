@@ -10,7 +10,7 @@
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	circle = box = rick = NULL;
+	
 	ray_on = false;
 	sensed = false;
 
@@ -28,23 +28,24 @@ bool ModuleSceneIntro::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-	circle = App->textures->Load("pinball/wheel.png");
-	box = App->textures->Load("pinball/crate.png");
-	rick = App->textures->Load("pinball/rick_head.png");
+	
 
 	coin_gold = App->audio->LoadFx("Resources/audios/fx/coin_gold.wav");
 	coin_green = App->audio->LoadFx("Resources/audios/fx/coin_green.wav");
 	coin_red = App->audio->LoadFx("Resources/audios/fx/coin_red.wav");
 	launch = App->audio->LoadFx("Resources/audios/fx/launch.wav");
 	lose = App->audio->LoadFx("Resources/audios/fx/lose.wav");
-
 	App->audio->PlayMusic("Resources/audios/music/soundtrack.ogg",-1);
 
+	items_tex = App->textures->Load("Resources/textures/items.png");
 	in_Game = App->textures->Load("Resources/textures/in-game.png");
 
-	//Killer
-	sensors.add(App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50));
 
+	//SENSORS:
+
+	//Killer
+	sensors.add(App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50))->data->type=ItemType::KILLER;
+	
 	//Greens
 	sensors.add(App->physics->CreateCircleSensor(203, 397, 14.5, GREEN));
 	sensors.add(App->physics->CreateCircleSensor(106, 310, 14.5, GREEN));
@@ -59,6 +60,9 @@ bool ModuleSceneIntro::Start()
 	sensors.add(App->physics->CreateCircleSensor(197, 99, 18, RED));
 	sensors.add(App->physics->CreateCircleSensor(265, 136, 18, RED));
 
+
+
+	//CHAINS:
 
 
 	int in_game1[126] = {
@@ -297,22 +301,25 @@ update_status ModuleSceneIntro::Update()
 	// All draw functions ------------------------------------------------------
 	p2List_item<PhysBody*>* c = circles.getFirst();
 
-	while(c != NULL)
+	/*while(c != NULL)
 	{
 		int x, y;
 		c->data->GetPosition(x, y);
 		if(c->data->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
-			App->renderer->Blit(circle, x, y, NULL, 1.0f, c->data->GetRotation());
+		{
+			App->renderer->Blit(circle, x, y, NULL, 1.0f);
+
+		}
 		c = c->next;
 	}
-
+*/
 	c = boxes.getFirst();
 
 	while(c != NULL)
 	{
 		int x, y;
 		c->data->GetPosition(x, y);
-		App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
+		//App->renderer->Blit(box, x, y, NULL, 1.0f, c->data->GetRotation());
 		if(ray_on)
 		{
 			int hit = c->data->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);
@@ -328,7 +335,7 @@ update_status ModuleSceneIntro::Update()
 	{
 		int x, y;
 		c->data->GetPosition(x, y);
-		App->renderer->Blit(App->player->texture, x, y, &ball, 1.0f, c->data->GetRotation());
+		App->renderer->Blit(App->player->items_tex, x, y, &ball, 1.0f);
 		c = c->next;
 	}
 
@@ -387,58 +394,6 @@ void ModuleSceneIntro::CheckInputs()
 		ray.y = App->input->GetMouseY();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 25));
-		circles.getLast()->data->listener = this;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		boxes.add(App->physics->CreateRectangle(App->input->GetMouseX(), App->input->GetMouseY(), 100, 50));
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
-		// Pivot 0, 0
-		int rick_head[64] = {
-			14, 36,
-			42, 40,
-			40, 0,
-			75, 30,
-			88, 4,
-			94, 39,
-			111, 36,
-			104, 58,
-			107, 62,
-			117, 67,
-			109, 73,
-			110, 85,
-			106, 91,
-			109, 99,
-			103, 104,
-			100, 115,
-			106, 121,
-			103, 125,
-			98, 126,
-			95, 137,
-			83, 147,
-			67, 147,
-			53, 140,
-			46, 132,
-			34, 136,
-			38, 126,
-			23, 123,
-			30, 114,
-			10, 102,
-			29, 90,
-			0, 75,
-			30, 62
-		};
-
-		chains.add(App->physics->CreateChain(App->input->GetMouseX(), App->input->GetMouseY(), rick_head, 64));
-	}
-	
 	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
 	App->physics->CreateCircle(380, 650, 15);
 

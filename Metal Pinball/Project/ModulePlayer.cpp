@@ -43,17 +43,11 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		p2List_item<PhysBody*>* c = balls.getFirst();
-		SDL_Rect ball = { 0,0,20,21 };
-		while (c != NULL)
-		{
-			c->data->body->ApplyLinearImpulse({ 0,-1 }, { 0,10 }, true);
-			c = c->next;
-		}
-	}
-		return UPDATE_CONTINUE;
+	
+	CheckDeath();
+	CheckInputs();
+	
+	return UPDATE_CONTINUE;
 	
 }
 
@@ -87,5 +81,33 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 }
 
+void ModulePlayer::CheckInputs()
+{
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		p2List_item<PhysBody*>* c = balls.getFirst();
+		SDL_Rect ball = { 0,0,20,21 };
+		while (c != NULL)
+		{
+			c->data->body->ApplyLinearImpulse({ 0,-1 }, { 0,10 }, true);
+			c = c->next;
+		}
+	}
+}
+
+void ModulePlayer::CheckDeath()
+{
+	if (lives >= 0 && balls.count() == 0)
+	{
+		RespawnCounter += 0.1f;
+
+		if (RespawnCounter >= 1.5f)
+		{
+			lives--;
+			RespawnCounter = 0.0f;
+			SpawnBall();
+		}
+	}
+}
 
 
