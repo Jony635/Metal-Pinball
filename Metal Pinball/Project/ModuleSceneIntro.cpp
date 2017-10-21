@@ -12,6 +12,8 @@ ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Modul
 	circle = box = rick = NULL;
 	ray_on = false;
 	sensed = false;
+
+	
 }
 
 ModuleSceneIntro::~ModuleSceneIntro()
@@ -39,8 +41,29 @@ bool ModuleSceneIntro::Start()
 
 	in_Game = App->textures->Load("Resources/textures/in-game.png");
 
+	//Killer
+	sensors.add(App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50));
 
-	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50);
+	//Greens
+	sensors.add(App->physics->CreateCircleSensor(203, 397, 14.5));
+	sensors.add(App->physics->CreateCircleSensor(106, 310, 14.5));
+	sensors.add(App->physics->CreateCircleSensor(292, 310, 14.5));
+	sensors.add(App->physics->CreateCircleSensor(203, 220, 14.5));
+	sensors.add(App->physics->CreateCircleSensor(140, 25, 14.5));
+	sensors.add(App->physics->CreateCircleSensor(189, 17, 14.5));
+	sensors.add(App->physics->CreateCircleSensor(242, 24, 14.5));
+
+	//Reds
+	sensors.add(App->physics->CreateCircleSensor(121, 136, 18));
+	sensors.add(App->physics->CreateCircleSensor(197, 99, 18));
+	sensors.add(App->physics->CreateCircleSensor(265, 136, 18));
+
+
+
+
+
+
+
 
 	int in_game1[126] = {
 		375, 741,
@@ -240,7 +263,6 @@ bool ModuleSceneIntro::Start()
 		53, 644,
 		53, 547
 	};
-
 
 	chains.add(App->physics->CreateChain(0, 0, in_game1, 126, b2_staticBody));
 	chains.add(App->physics->CreateChain(0, 0, in_game2, 76, b2_staticBody));
