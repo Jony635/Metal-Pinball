@@ -329,6 +329,7 @@ update_status ModuleSceneIntro::Update()
 	}
 
 	c = App->player->balls.getFirst();
+	
 	SDL_Rect ball = { 0,0,20,21 };
 	while (c != NULL)
 	{
@@ -337,7 +338,6 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(items_tex, x, y, &ball, 1.0f);
 		c = c->next;
 	}
-
 	//c = chains.getFirst();
 
 	//while(c != NULL)

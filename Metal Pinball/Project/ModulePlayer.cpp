@@ -94,7 +94,7 @@ void ModulePlayer::CheckInputs()
 
 void ModulePlayer::CheckDeath()
 {
-	if (lives >= 0 && balls.count() == 0)
+	if (lives > 0 && balls.count() == 0)
 	{
 		RespawnCounter += 0.1f;
 
