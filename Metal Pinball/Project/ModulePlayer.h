@@ -27,7 +27,7 @@ public:
 	p2List<PhysBody*> balls;
 	int lives;
 	uint score;
-
+	bool start = false;
 
 	float RespawnCounter = 0.0f;
 };

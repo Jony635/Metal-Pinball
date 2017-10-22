@@ -50,8 +50,9 @@ update_status ModulePlayer::Update()
 
 void ModulePlayer::SpawnBall() 
 {
-	balls.add(App->physics->CreateCircle(380, 650, 10));
+	balls.add(App->physics->CreateCircle(395, 660, 10));
 	balls.getLast()->data->listener = this;
+	start = true;
 }
 
 void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB) 
@@ -80,15 +81,16 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 void ModulePlayer::CheckInputs()
 {
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && start)
 	{
 		p2List_item<PhysBody*>* c = balls.getFirst();
 		SDL_Rect ball = { 0,0,20,21 };
 		while (c != NULL)
 		{
-			c->data->body->ApplyLinearImpulse({ 0,-1 }, { 0,10 }, true);
+			c->data->body->ApplyLinearImpulse({ 0,-5 }, { 0,10 }, true);
 			c = c->next;
 		}
+		start = false;
 	}
 }
 

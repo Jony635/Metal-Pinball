@@ -263,12 +263,22 @@ bool ModuleSceneIntro::Start()
 		53, 547
 	};
 
+	int in_game7[8] = {
+		374, 663,
+		415, 663,
+		415, 677,
+		375, 677
+	};
+
+
+
 	chains.add(App->physics->CreateChain(0, 0, in_game1, 126, b2_staticBody));
 	chains.add(App->physics->CreateChain(0, 0, in_game2, 76, b2_staticBody));
 	chains.add(App->physics->CreateChain(0, 0, in_game3, 96, b2_staticBody));
 	chains.add(App->physics->CreateChain(0, 0, in_game4, 26, b2_staticBody));
 	chains.add(App->physics->CreateChain(0, 0, in_game5, 20, b2_staticBody));
 	chains.add(App->physics->CreateChain(0, 0, in_game6, 18, b2_staticBody));
+	chains.add(App->physics->CreateChain(0, 0, in_game7, 8, b2_staticBody));
 
 
 
@@ -361,6 +371,10 @@ update_status ModuleSceneIntro::Update()
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
 
+	SDL_Rect rect = { 23,0,32,77 };
+	App->renderer->Blit(items_tex, 379, 663, &rect, 1.0f);
+
+
 	return UPDATE_CONTINUE;
 }
 
@@ -392,9 +406,6 @@ void ModuleSceneIntro::CheckInputs()
 		ray.x = App->input->GetMouseX();
 		ray.y = App->input->GetMouseY();
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
-	App->physics->CreateCircle(380, 650, 15);
 
 }
 
