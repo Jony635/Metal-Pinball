@@ -36,7 +36,7 @@ bool ModuleSceneIntro::Start()
 	launch = App->audio->LoadFx("Resources/audios/fx/launch.wav");
 	lose = App->audio->LoadFx("Resources/audios/fx/lose.wav");
 	App->audio->PlayMusic("Resources/audios/music/soundtrack.ogg",-1);
-
+	items_tex = App->textures->Load("Resources/textures/items.png");
 	in_Game = App->textures->Load("Resources/textures/in-game.png");
 
 
