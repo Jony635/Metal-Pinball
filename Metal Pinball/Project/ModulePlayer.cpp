@@ -22,7 +22,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 
-	texture = App->textures->Load("Resources/textures/items.png");
+	items_tex = App->textures->Load("Resources/textures/items.png");
 
 	lives = 3;
 
