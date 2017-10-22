@@ -20,10 +20,42 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
-
 	lives = 3;
-
 	SpawnBall();
+	
+	int flipperRightDown[16]{ 233, 715,
+		262, 683,
+		281, 671,
+		287, 676,
+		288, 691,
+		274, 701,
+		237, 720,
+		233, 716 };
+	int flipperLeftDown[16]{ 138, 673,
+		134, 683,
+		138, 697,
+		187, 722,
+		189, 717,
+		178, 702,
+		158, 682,
+		141, 672 };
+	int flipperRightUp[16]{ 315, 243,
+		298, 255,
+		280, 274,
+		279, 280,
+		287, 279,
+		318, 262,
+		322, 252,
+		317, 243 };
+	int flipperLeftUp[16] = { 121, 443,
+		116, 451,
+		118, 460,
+		154, 479,
+		159, 478,
+		150, 464,
+		131, 446,
+		124, 443 };
+
 
 
 	return true;
