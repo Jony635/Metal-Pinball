@@ -75,10 +75,10 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
+PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = type;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -422,15 +422,15 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 }
 
-PhysBody* ModulePhysics::CreateFlipper(int x, int y, int* points, int size, PhysBody& anchor)
+PhysBody* ModulePhysics::CreateFlipper(int x, int y, int* points, int size, PhysBody* anchor)
 {
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	b2Body* b = world->CreateBody(&body);
-
-	b2PolygonShape shape;
+	b2PolygonShape box;
+	
 	b2Vec2* p = new b2Vec2[size / 2];
 
 	for (uint i = 0; i < size / 2; ++i)
@@ -439,26 +439,38 @@ PhysBody* ModulePhysics::CreateFlipper(int x, int y, int* points, int size, Phys
 		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
 	}
 
-	shape.Set(p, size / 2);
+
+	box.Set(p, size / 2);
 
 	b2FixtureDef fixture;
-	fixture.shape = &shape;
+	fixture.shape = &box;
+	fixture.density = 10.0f;
+	
 
 	b->CreateFixture(&fixture);
-
-	delete p;
 
 	PhysBody* pbody = new PhysBody();
 	pbody->body = b;
 	b->SetUserData(pbody);
-	pbody->width = pbody->height = 0;
 
-	b2RevoluteJoint joint;
-	joint.bodyA = b;
-	joint.bodyB = anchor;
-	joint.SetLimits((-45)*DEGTORAD, 45*DEGTORAD);
+
+	b2RevoluteJointDef joint;
+	joint.bodyA = pbody->body;
+	joint.bodyB = anchor->body;
 	
-	world->CreateJoint(joint);
+//	joint.collideConnected = false;
+	joint.lowerAngle = 0;
+	joint.upperAngle = DEGTORAD * 70;
+	joint.enableLimit = true;
+
+	joint.localAnchorA.Set(PIXEL_TO_METERS(134) , PIXEL_TO_METERS(680));
+	joint.localAnchorB.Set(0, 0);
+	
+
+
+	world->CreateJoint(&joint);
+
+
 
 
 	return pbody;

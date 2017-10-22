@@ -29,5 +29,7 @@ public:
 	uint score;
 	bool start = false;
 
+	p2List<PhysBody*> Flippers;
+
 	float RespawnCounter = 0.0f;
 };

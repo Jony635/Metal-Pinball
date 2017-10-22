@@ -56,6 +56,9 @@ bool ModulePlayer::Start()
 		131, 446,
 		124, 443 };
 
+	
+		
+	Flippers.add(App->physics->CreateFlipper(0+50, 0, flipperLeftDown,16, App->physics->CreateCircle(137+50, 672, 1,b2_staticBody)));
 
 
 	return true;
@@ -82,7 +85,7 @@ update_status ModulePlayer::Update()
 
 void ModulePlayer::SpawnBall() 
 {
-	balls.add(App->physics->CreateCircle(395, 660, 10));
+	balls.add(App->physics->CreateCircle(395, 500, 10));
 	balls.getLast()->data->listener = this;
 	start = true;
 }
@@ -124,6 +127,13 @@ void ModulePlayer::CheckInputs()
 		}
 		start = false;
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+
+		Flippers.getFirst()->data->body->ApplyLinearImpulse({ 0,50 }, { PIXEL_TO_METERS(12),0 }, true);
+
+	}
+
 }
 
 void ModulePlayer::CheckDeath()
