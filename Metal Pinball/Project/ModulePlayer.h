@@ -24,10 +24,10 @@ public:
 
 public:
 
-	SDL_Texture* items_tex = nullptr;
 	p2List<PhysBody*> balls;
 	int lives;
 	uint score;
+
 
 	float RespawnCounter = 0.0f;
 };

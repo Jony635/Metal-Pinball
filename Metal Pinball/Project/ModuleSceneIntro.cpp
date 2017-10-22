@@ -335,7 +335,7 @@ update_status ModuleSceneIntro::Update()
 	{
 		int x, y;
 		c->data->GetPosition(x, y);
-		App->renderer->Blit(App->player->items_tex, x, y, &ball, 1.0f);
+		App->renderer->Blit(items_tex, x, y, &ball, 1.0f);
 		c = c->next;
 	}
 

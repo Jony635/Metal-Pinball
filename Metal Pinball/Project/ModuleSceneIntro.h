@@ -28,6 +28,7 @@ public:
 
 
 	SDL_Texture* in_Game=nullptr;
+	SDL_Texture* items_tex = nullptr;
 
 	uint coin_gold;
 	uint coin_red;

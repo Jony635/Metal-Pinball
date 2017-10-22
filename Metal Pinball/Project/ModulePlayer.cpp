@@ -21,9 +21,6 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-
-	texture = App->textures->Load("Resources/textures/items.png");
-
 	lives = 3;
 
 	SpawnBall();
