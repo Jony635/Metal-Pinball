@@ -5,6 +5,7 @@
 #include "ModulePhysics.h"
 #include "p2Point.h"
 #include "math.h"
+#include "ModulePlayer.h"
 
 #ifdef _DEBUG
 #pragma comment( lib, "Box2D/libx86/Debug/Box2D.lib" )
@@ -459,13 +460,41 @@ PhysBody* ModulePhysics::CreateFlipper(int x, int y, int* points, int size, Phys
 	joint.bodyB = anchor->body;
 	
 //	joint.collideConnected = false;
-	joint.lowerAngle = 0;
-	joint.upperAngle = DEGTORAD * 70;
+
 	joint.enableLimit = true;
 
-	joint.localAnchorA.Set(PIXEL_TO_METERS(134) , PIXEL_TO_METERS(680));
-	joint.localAnchorB.Set(0, 0);
-	
+	if (anchor == App->player->ChainDL->data) 
+	{
+		joint.localAnchorA.Set(PIXEL_TO_METERS(134), PIXEL_TO_METERS(672));
+		joint.localAnchorB.Set(PIXEL_TO_METERS(134), PIXEL_TO_METERS(672));
+		joint.lowerAngle = 0;
+		joint.upperAngle = DEGTORAD * 70;
+	}
+
+	else if (anchor == App->player->ChainDR->data)
+	{
+		joint.localAnchorA.Set(PIXEL_TO_METERS(282), PIXEL_TO_METERS(672) + PIXEL_TO_METERS(-3));
+		joint.localAnchorB.Set(PIXEL_TO_METERS(282), PIXEL_TO_METERS(672) + PIXEL_TO_METERS(-6));
+		joint.lowerAngle = DEGTORAD * -70;
+		joint.upperAngle = DEGTORAD * 0;
+	}
+
+	else if (anchor == App->player->ChainUL->data)
+	{
+		joint.localAnchorA.Set(PIXEL_TO_METERS(119), PIXEL_TO_METERS(446));
+		joint.localAnchorB.Set(PIXEL_TO_METERS(119), PIXEL_TO_METERS(446));
+		joint.lowerAngle = 0;
+		joint.upperAngle = DEGTORAD * 70;
+	}
+
+	else
+	{
+		joint.localAnchorA.Set(PIXEL_TO_METERS(327), PIXEL_TO_METERS(250));
+		joint.localAnchorB.Set(PIXEL_TO_METERS(325), PIXEL_TO_METERS(247));
+		joint.lowerAngle = DEGTORAD * -70;
+		joint.upperAngle = DEGTORAD * 0;
+	}
+
 
 
 	world->CreateJoint(&joint);

@@ -272,12 +272,12 @@ bool ModuleSceneIntro::Start()
 
 
 
-	chains.add(App->physics->CreateChain(0, 0, in_game1, 126, b2_staticBody));
-	chains.add(App->physics->CreateChain(0, 0, in_game2, 76, b2_staticBody));
-	chains.add(App->physics->CreateChain(0, 0, in_game3, 96, b2_staticBody));
+	App->player->ChainDR = chains.add(App->physics->CreateChain(0, 0, in_game1, 126, b2_staticBody));
+	App->player->ChainUL = chains.add(App->physics->CreateChain(0, 0, in_game2, 76, b2_staticBody));
+	App->player->ChainUR = chains.add(App->physics->CreateChain(0, 0, in_game3, 96, b2_staticBody));
 	chains.add(App->physics->CreateChain(0, 0, in_game4, 26, b2_staticBody));
 	chains.add(App->physics->CreateChain(0, 0, in_game5, 20, b2_staticBody));
-	chains.add(App->physics->CreateChain(0, 0, in_game6, 18, b2_staticBody));
+	App->player->ChainDL = chains.add(App->physics->CreateChain(0, 0, in_game6, 18, b2_staticBody));
 	chains.add(App->physics->CreateChain(0, 0, in_game7, 8, b2_staticBody));
 
 

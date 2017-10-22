@@ -6,6 +6,7 @@
 #include "ModulePhysics.h"
 #include "ModuleAudio.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleRender.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -58,8 +59,10 @@ bool ModulePlayer::Start()
 
 	
 		
-	Flippers.add(App->physics->CreateFlipper(0+50, 0, flipperLeftDown,16, App->physics->CreateCircle(137+50, 672, 1,b2_staticBody)));
-
+	Flippers.add(App->physics->CreateFlipper(0, 0, flipperLeftDown,16, ChainDL->data));
+	Flippers.add(App->physics->CreateFlipper(0, 0, flipperRightDown, 16, ChainDR->data));
+	Flippers.add(App->physics->CreateFlipper(0, 0, flipperRightUp, 16, ChainUR->data));
+	Flippers.add(App->physics->CreateFlipper(0, 0, flipperLeftUp, 16, ChainUL->data));
 
 	return true;
 }
@@ -78,7 +81,34 @@ update_status ModulePlayer::Update()
 	
 	CheckDeath();
 	CheckInputs();
-	
+
+	p2List_item<PhysBody*>* iterator = Flippers.getFirst();
+	for (int i =0; iterator != nullptr; iterator = iterator->next, ++i) 
+	{
+		int x, y;
+		iterator->data->GetPosition(x, y);
+		SDL_Rect rect;
+		switch (i)
+		{
+		case 0:
+			rect = { 58,0,57,48 };
+			App->renderer->Blit(App->scene_intro->items_tex, 134, 672, &rect,1,iterator->data->GetRotation(), PIXEL_TO_METERS(134), PIXEL_TO_METERS(-672)+9);
+			break;
+		case 1:
+			rect = { 58,0,57,48 };
+			App->renderer->Blit(App->scene_intro->items_tex, 282-50, 672, &rect, 1, iterator->data->GetRotation(), PIXEL_TO_METERS(282+50), PIXEL_TO_METERS(-672) + 10, SDL_FLIP_HORIZONTAL);
+			break;
+		case 2:
+			rect = { 117,0,42,37 };
+			App->renderer->Blit(App->scene_intro->items_tex, 315-40, 240, &rect, 1, iterator->data->GetRotation(), PIXEL_TO_METERS(315+40), PIXEL_TO_METERS(-247) + 9, SDL_FLIP_HORIZONTAL);
+			break;
+		case 3:
+			rect = { 117,0,42,37 };
+			App->renderer->Blit(App->scene_intro->items_tex, 119, 446, &rect, 1, iterator->data->GetRotation(), PIXEL_TO_METERS(119), PIXEL_TO_METERS(-446) + 9);
+			break;
+		}
+	}
+
 	return UPDATE_CONTINUE;
 	
 }
@@ -130,8 +160,14 @@ void ModulePlayer::CheckInputs()
 
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 
-		Flippers.getFirst()->data->body->ApplyLinearImpulse({ 0,50 }, { PIXEL_TO_METERS(12),0 }, true);
+		Flippers.getFirst()->data->body->ApplyLinearImpulse({ 0,10 }, { PIXEL_TO_METERS(12),0 }, true);
+		Flippers.getLast()->data->body->ApplyLinearImpulse({ 0,2 }, { PIXEL_TO_METERS(8),0 }, true);
+	}
 
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+
+		Flippers.getFirst()->next->data->body->ApplyLinearImpulse({ 0,-10 }, { PIXEL_TO_METERS(-8),PIXEL_TO_METERS(-2) }, true);
+		Flippers.getFirst()->next->next->data->body->ApplyLinearImpulse({ 0,-2 }, { PIXEL_TO_METERS(-8),PIXEL_TO_METERS(-2) }, true);
 	}
 
 }

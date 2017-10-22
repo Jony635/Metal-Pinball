@@ -31,5 +31,11 @@ public:
 
 	p2List<PhysBody*> Flippers;
 
+	p2List_item<PhysBody*>* ChainDL = nullptr;
+	p2List_item<PhysBody*>* ChainDR = nullptr;
+	p2List_item<PhysBody*>* ChainUL = nullptr;
+	p2List_item<PhysBody*>* ChainUR = nullptr;
+
+
 	float RespawnCounter = 0.0f;
 };
