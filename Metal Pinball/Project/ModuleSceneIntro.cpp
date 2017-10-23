@@ -58,7 +58,7 @@ bool ModuleSceneIntro::Start()
 	sensors.add(App->physics->CreateCircleSensor(121, 136, 18, RED));
 	sensors.add(App->physics->CreateCircleSensor(197, 99, 18, RED));
 	sensors.add(App->physics->CreateCircleSensor(265, 136, 18, RED));
-
+	
 
 
 	//CHAINS:
@@ -278,8 +278,8 @@ bool ModuleSceneIntro::Start()
 	chains.add(App->physics->CreateChain(0, 0, in_game4, 26, b2_staticBody));
 	chains.add(App->physics->CreateChain(0, 0, in_game5, 20, b2_staticBody));
 	App->player->ChainDL = chains.add(App->physics->CreateChain(0, 0, in_game6, 18, b2_staticBody));
-	chains.add(App->physics->CreateChain(0, 0, in_game7, 8, b2_staticBody));
-
+	initialchain= chains.add(App->physics->CreateChain(0, 0, in_game7, 8, b2_staticBody));
+	initialchain->data->type = INITIAL_CHAIN;
 
 
 	return ret;
@@ -380,7 +380,7 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-
+	
 
 
 	/*
@@ -400,10 +400,10 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 void ModuleSceneIntro::CheckInputs()
 {
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 15));
-	}
+	}*/
 
 }
 

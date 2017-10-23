@@ -140,7 +140,11 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		App->audio->PlayFx(App->scene_intro->lose);
 		balls.clear();
 		break;
+	case ItemType::INITIAL_CHAIN:
+		start = true;
+		break;
 	}
+	
 
 }
 

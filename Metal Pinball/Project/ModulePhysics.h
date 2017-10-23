@@ -20,7 +20,9 @@ enum ItemType
 	GREEN,
 	GOLD,
 
-	KILLER
+	KILLER,
+
+	INITIAL_CHAIN
 };
 
 // Small class to return to other modules to track position and rotation of physics bodies

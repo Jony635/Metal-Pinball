@@ -23,6 +23,7 @@ public:
 	p2List<PhysBody*> boxes;
 	p2List<PhysBody*> chains;
 	p2List<PhysBody*> sensors;
+	p2List_item<PhysBody*>* initialchain = nullptr;
 
 	bool sensed;
 
