@@ -19,7 +19,7 @@ enum ItemType
 	RED,
 	GREEN,
 	GOLD,
-
+	BALL,
 	KILLER,
 
 	INITIAL_CHAIN
@@ -56,7 +56,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type = b2_dynamicBody);
+	PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type = b2_dynamicBody, ItemType i_type=ItemType::NO_TYPE);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateCircleSensor(int x, int y, int radius, ItemType type = ItemType::NO_TYPE);

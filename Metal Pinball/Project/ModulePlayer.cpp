@@ -115,9 +115,9 @@ update_status ModulePlayer::Update()
 
 void ModulePlayer::SpawnBall() 
 {
-	balls.add(App->physics->CreateCircle(395, 500, 10));
+	balls.add(App->physics->CreateCircle(395, 500, 10,b2_dynamicBody, BALL));
 	balls.getLast()->data->listener = this;
-	start = true;
+	start = false;
 }
 
 void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB) 
