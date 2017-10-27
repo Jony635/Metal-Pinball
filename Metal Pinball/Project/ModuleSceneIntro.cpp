@@ -63,7 +63,6 @@ bool ModuleSceneIntro::Start()
 
 	//CHAINS:
 
-
 	int in_game1[126] = {
 		375, 741,
 		415, 741,
@@ -129,7 +128,6 @@ bool ModuleSceneIntro::Start()
 		375, 517,
 		375, 740
 	};
-
 	int in_game2[76] = {
 		124, 68,
 		104, 82,
@@ -170,7 +168,6 @@ bool ModuleSceneIntro::Start()
 		113, 83,
 		127, 73
 	};
-
 	int in_game3[96] = {
 		100, 167,
 		109, 150,
@@ -221,7 +218,6 @@ bool ModuleSceneIntro::Start()
 		107, 164,
 		105, 169
 	};
-
 	int in_game4[26] = {
 		93, 542,
 		93, 607,
@@ -237,7 +233,6 @@ bool ModuleSceneIntro::Start()
 		98, 549,
 		94, 542
 	};
-
 	int in_game5[20] = {
 		327, 543,
 		317, 568,
@@ -250,7 +245,6 @@ bool ModuleSceneIntro::Start()
 		328, 611,
 		329, 543
 	};
-
 	int in_game6[18] = {
 		46, 548,
 		45, 662,
@@ -262,7 +256,6 @@ bool ModuleSceneIntro::Start()
 		53, 644,
 		53, 547
 	};
-
 	int in_game7[8] = {
 		374, 663,
 		415, 663,
@@ -270,8 +263,7 @@ bool ModuleSceneIntro::Start()
 		375, 677
 	};
 
-
-
+	
 	App->player->ChainDR = chains.add(App->physics->CreateChain(0, 0, in_game1, 126, b2_staticBody));
 	App->player->ChainUL = chains.add(App->physics->CreateChain(0, 0, in_game2, 76, b2_staticBody));
 	App->player->ChainUR = chains.add(App->physics->CreateChain(0, 0, in_game3, 96, b2_staticBody));
