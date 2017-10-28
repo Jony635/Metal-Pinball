@@ -43,26 +43,27 @@ bool ModuleSceneIntro::Start()
 
 	// SENSORS:
 
-	// Killer
-	sensors.add(App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50))->data->type=ItemType::KILLER;
-	
-	// Greens
-	sensors.add(App->physics->CreateCircleSensor(203, 397, 14.5, GREEN));
-	sensors.add(App->physics->CreateCircleSensor(106, 310, 14.5, GREEN));
-	sensors.add(App->physics->CreateCircleSensor(292, 310, 14.5, GREEN));
-	sensors.add(App->physics->CreateCircleSensor(203, 220, 14.5, GREEN));
-	sensors.add(App->physics->CreateCircleSensor(140, 25, 14.5, GREEN));
-	sensors.add(App->physics->CreateCircleSensor(189, 17, 14.5, GREEN));
-	sensors.add(App->physics->CreateCircleSensor(242, 24, 14.5, GREEN));
+    // Killer
+    sensors.add(App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50))->data->type=ItemType::KILLER;
 
-	// Reds
-	sensors.add(App->physics->CreateCircleSensor(121, 136, 18, RED));
-	sensors.add(App->physics->CreateCircleSensor(197, 99, 18, RED));
-	sensors.add(App->physics->CreateCircleSensor(265, 136, 18, RED));
+    // Greens
+    sensors.add(App->physics->CreateCircleSensor(203, 397, 14.5, GREEN));
+    sensors.add(App->physics->CreateCircleSensor(106, 310, 14.5, GREEN));
+    sensors.add(App->physics->CreateCircleSensor(292, 310, 14.5, GREEN));
+    sensors.add(App->physics->CreateCircleSensor(203, 220, 14.5, GREEN));
+    sensors.add(App->physics->CreateCircleSensor(140, 25, 14.5, GREEN));
+    sensors.add(App->physics->CreateCircleSensor(189, 17, 14.5, GREEN));
+    sensors.add(App->physics->CreateCircleSensor(242, 24, 14.5, GREEN));
 
-	// Gold
-	sensors.add(App->physics->CreateCircleSensor(60, 227, 12, GOLD));
-	sensors.add(App->physics->CreateCircleSensor(327, 149, 12, GOLD));
+    // Reds
+    sensors.add(App->physics->CreateCircleSensor(121, 136, 18, RED));
+    sensors.add(App->physics->CreateCircleSensor(197, 99, 18, RED));
+    sensors.add(App->physics->CreateCircleSensor(265, 136, 18, RED));
+
+
+    // Gold
+    sensors.add(App->physics->CreateCircleSensor(60, 227, 12, GOLD));
+    sensors.add(App->physics->CreateCircleSensor(327, 149, 12, GOLD));
 
 	// CHAINS:
 	int in_game1[126] = {
