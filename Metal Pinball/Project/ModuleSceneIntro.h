@@ -3,6 +3,8 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "Globals.h"
+#include "Animation.h"
+
 
 class PhysBody;
 
@@ -30,6 +32,8 @@ public:
 
 	SDL_Texture* in_Game=nullptr;
 	SDL_Texture* items_tex = nullptr;
+	SDL_Texture* coins = nullptr;
+	Animation gold_coin;
 
 	uint coin_gold;
 	uint coin_red;

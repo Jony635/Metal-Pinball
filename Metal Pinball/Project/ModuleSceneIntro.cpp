@@ -38,6 +38,7 @@ bool ModuleSceneIntro::Start()
 	App->audio->PlayMusic("Resources/audios/music/soundtrack.ogg",-1);
 	items_tex = App->textures->Load("Resources/textures/items.png");
 	in_Game = App->textures->Load("Resources/textures/in-game.png");
+	coins = App->textures->Load("Resources/textures/coins.png");
 
 
 	//SENSORS:
@@ -273,6 +274,15 @@ bool ModuleSceneIntro::Start()
 	initialchain= chains.add(App->physics->CreateChain(0, 0, in_game7, 8, b2_staticBody));
 	initialchain->data->type = INITIAL_CHAIN;
 
+	// Gold coin animation
+	int x = 0, y = 0, w = 23, h = 27;
+	int margin = 1;
+	for (int i = 0; i < 8; i++) {
+		x = (w + margin) * i;
+		gold_coin.PushBack({ x, y, w, h });
+	}
+	gold_coin.speed = 0.05f;
+
 
 	return ret;
 }
@@ -366,6 +376,9 @@ update_status ModuleSceneIntro::Update()
 	SDL_Rect rect = { 23,0,32,77 };
 	App->renderer->Blit(items_tex, 379, 663, &rect, 1.0f);
 
+	rect = gold_coin.GetCurrentFrame();
+	App->renderer->Blit(coins, 60, 225, &rect);
+	App->renderer->Blit(coins, 327, 147, &rect);
 
 	return UPDATE_CONTINUE;
 }
