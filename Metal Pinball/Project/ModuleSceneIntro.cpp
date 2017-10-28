@@ -38,31 +38,34 @@ bool ModuleSceneIntro::Start()
 	App->audio->PlayMusic("Resources/audios/music/soundtrack.ogg",-1);
 	items_tex = App->textures->Load("Resources/textures/items.png");
 	in_Game = App->textures->Load("Resources/textures/in-game.png");
+	coins = App->textures->Load("Resources/textures/coins.png");
 
 
-	//SENSORS:
+	// SENSORS:
 
-		//Killer
-		sensors.add(App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50))->data->type=ItemType::KILLER;
-	
-		//Greens
-		sensors.add(App->physics->CreateCircleSensor(203, 397, 14.5, GREEN));
-		sensors.add(App->physics->CreateCircleSensor(106, 310, 14.5, GREEN));
-		sensors.add(App->physics->CreateCircleSensor(292, 310, 14.5, GREEN));
-		sensors.add(App->physics->CreateCircleSensor(203, 220, 14.5, GREEN));
-		sensors.add(App->physics->CreateCircleSensor(140, 25, 14.5, GREEN));
-		sensors.add(App->physics->CreateCircleSensor(189, 17, 14.5, GREEN));
-		sensors.add(App->physics->CreateCircleSensor(242, 24, 14.5, GREEN));
+    // Killer
+    sensors.add(App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50))->data->type=ItemType::KILLER;
 
-		//Reds
-		sensors.add(App->physics->CreateCircleSensor(121, 136, 18, RED));
-		sensors.add(App->physics->CreateCircleSensor(197, 99, 18, RED));
-		sensors.add(App->physics->CreateCircleSensor(265, 136, 18, RED));
-	
+    // Greens
+    sensors.add(App->physics->CreateCircleSensor(203, 397, 14.5, GREEN));
+    sensors.add(App->physics->CreateCircleSensor(106, 310, 14.5, GREEN));
+    sensors.add(App->physics->CreateCircleSensor(292, 310, 14.5, GREEN));
+    sensors.add(App->physics->CreateCircleSensor(203, 220, 14.5, GREEN));
+    sensors.add(App->physics->CreateCircleSensor(140, 25, 14.5, GREEN));
+    sensors.add(App->physics->CreateCircleSensor(189, 17, 14.5, GREEN));
+    sensors.add(App->physics->CreateCircleSensor(242, 24, 14.5, GREEN));
+
+    // Reds
+    sensors.add(App->physics->CreateCircleSensor(121, 136, 18, RED));
+    sensors.add(App->physics->CreateCircleSensor(197, 99, 18, RED));
+    sensors.add(App->physics->CreateCircleSensor(265, 136, 18, RED));
 
 
-	//CHAINS:
+    // Gold
+    sensors.add(App->physics->CreateCircleSensor(60, 227, 12, GOLD));
+    sensors.add(App->physics->CreateCircleSensor(327, 149, 12, GOLD));
 
+	// CHAINS:
 	int in_game1[126] = {
 		375, 741,
 		415, 741,
@@ -273,6 +276,15 @@ bool ModuleSceneIntro::Start()
 	initialchain= chains.add(App->physics->CreateChain(0, 0, in_game7, 8, b2_staticBody));
 	initialchain->data->type = INITIAL_CHAIN;
 
+	// Gold coin animation
+	int x = 0, y = 0, w = 23, h = 27;
+	int margin = 1;
+	for (int i = 0; i < 8; i++) {
+		x = (w + margin) * i;
+		gold_coin.PushBack({ x, y, w, h });
+	}
+	gold_coin.speed = 0.05f;
+
 
 	return ret;
 }
@@ -366,6 +378,9 @@ update_status ModuleSceneIntro::Update()
 	SDL_Rect rect = { 23,0,32,77 };
 	App->renderer->Blit(items_tex, 379, 663, &rect, 1.0f);
 
+	rect = gold_coin.GetCurrentFrame();
+	App->renderer->Blit(coins, 60, 225, &rect);
+	App->renderer->Blit(coins, 327, 147, &rect);
 
 	return UPDATE_CONTINUE;
 }
