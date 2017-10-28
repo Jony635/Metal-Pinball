@@ -41,12 +41,12 @@ bool ModuleSceneIntro::Start()
 	coins = App->textures->Load("Resources/textures/coins.png");
 
 
-	//SENSORS:
+	// SENSORS:
 
-	//Killer
+	// Killer
 	sensors.add(App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT + 50, SCREEN_WIDTH, 50))->data->type=ItemType::KILLER;
 	
-	//Greens
+	// Greens
 	sensors.add(App->physics->CreateCircleSensor(203, 397, 14.5, GREEN));
 	sensors.add(App->physics->CreateCircleSensor(106, 310, 14.5, GREEN));
 	sensors.add(App->physics->CreateCircleSensor(292, 310, 14.5, GREEN));
@@ -55,15 +55,16 @@ bool ModuleSceneIntro::Start()
 	sensors.add(App->physics->CreateCircleSensor(189, 17, 14.5, GREEN));
 	sensors.add(App->physics->CreateCircleSensor(242, 24, 14.5, GREEN));
 
-	//Reds
+	// Reds
 	sensors.add(App->physics->CreateCircleSensor(121, 136, 18, RED));
 	sensors.add(App->physics->CreateCircleSensor(197, 99, 18, RED));
 	sensors.add(App->physics->CreateCircleSensor(265, 136, 18, RED));
-	
 
+	// Gold
+	sensors.add(App->physics->CreateCircleSensor(60, 227, 12, GOLD));
+	sensors.add(App->physics->CreateCircleSensor(327, 149, 12, GOLD));
 
-	//CHAINS:
-
+	// CHAINS:
 	int in_game1[126] = {
 		375, 741,
 		415, 741,
