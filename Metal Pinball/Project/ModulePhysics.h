@@ -25,13 +25,16 @@ enum ItemType
 	INITIAL_CHAIN
 };
 
+class ModulePhysics;
+
 // Small class to return to other modules to track position and rotation of physics bodies
 class PhysBody
 {
 public:
 	PhysBody() : listener(NULL), body(NULL)
 	{}
-
+	~PhysBody();
+	
 	void GetPosition(int& x, int &y) const;
 	float GetRotation() const;
 	bool Contains(int x, int y) const;
@@ -41,6 +44,7 @@ public:
 	int width, height;
 	b2Body* body;
 	Module* listener;
+	ModulePhysics* physics = nullptr;
 	ItemType type = NO_TYPE;
 };
 
@@ -66,6 +70,8 @@ public:
 	void BeginContact(b2Contact* contact);
 	
 	b2World* world;
+
+	p2List<PhysBody*> deletes;
 
 private:
 

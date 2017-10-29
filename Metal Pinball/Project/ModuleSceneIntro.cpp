@@ -283,7 +283,7 @@ bool ModuleSceneIntro::Start()
 		x = (w + margin) * i;
 		gold_coin.PushBack({ x, y, w, h });
 	}
-	gold_coin.speed = 0.05f;
+	gold_coin.speed = 0.15f;
 
 
 	return ret;

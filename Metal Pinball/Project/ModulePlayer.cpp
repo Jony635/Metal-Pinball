@@ -117,6 +117,7 @@ void ModulePlayer::SpawnBall()
 {
 	balls.add(App->physics->CreateCircle(395, 500, 10,b2_dynamicBody, BALL));
 	balls.getLast()->data->listener = this;
+	balls.getLast()->data->physics = App->physics;
 	start = false;
 }
 
@@ -138,6 +139,7 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	case ItemType::KILLER:
 		App->audio->PlayFx(App->scene_intro->lose);
+		App->physics->deletes.add(bodyA);
 		balls.clear();
 		break;
 	case ItemType::INITIAL_CHAIN:

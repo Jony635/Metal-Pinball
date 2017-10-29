@@ -314,18 +314,16 @@ update_status ModulePhysics::PostUpdate()
 
 				}
 			}
-			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && body_clicked != nullptr) {
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && body_clicked != nullptr) 
+			{
+
 				b2Vec2 mouse_position(PIXEL_TO_METERS(App->input->GetMouseX()), PIXEL_TO_METERS(App->input->GetMouseY()));
-
 				mouse_joint->SetTarget(mouse_position);
-
 				b2Vec2	bodypos = body_clicked->GetPosition();
-
-
 				App->renderer->DrawLine(METERS_TO_PIXELS(bodypos.x), METERS_TO_PIXELS(bodypos.y), App->input->GetMouseX(), App->input->GetMouseY(), 255, 0, 0);
 			}
-			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP&& body_clicked != nullptr) {
-
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP&& body_clicked != nullptr) 
+			{
 				world->DestroyJoint(mouse_joint);
 				mouse_joint = nullptr;
 				body_clicked = nullptr;
@@ -333,6 +331,21 @@ update_status ModulePhysics::PostUpdate()
 			}
 		}
 	}
+
+	p2List_item<PhysBody*>* pbody = deletes.getFirst();
+	while (pbody != nullptr)
+	{
+		if (this->body_clicked == pbody->data->body && body_clicked != nullptr)
+		{
+			if(mouse_joint!=nullptr)
+				world->DestroyJoint(mouse_joint);
+			mouse_joint = nullptr;
+			body_clicked = nullptr;
+		}
+		pbody->data->~PhysBody();
+		pbody = pbody->next;
+	}
+	deletes.clear();
 
 	return UPDATE_CONTINUE;
 }
@@ -359,6 +372,14 @@ void PhysBody::GetPosition(int& x, int &y) const
 float PhysBody::GetRotation() const
 {
 	return RADTODEG * body->GetAngle();
+}
+
+PhysBody::~PhysBody()
+{
+	if (physics != nullptr)
+	{
+		physics->world->DestroyBody(body);
+	}
 }
 
 bool PhysBody::Contains(int x, int y) const
