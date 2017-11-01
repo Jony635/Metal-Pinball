@@ -69,6 +69,7 @@ bool ModuleSceneIntro::Start()
 	items_tex = App->textures->Load("Resources/textures/items.png");
 	in_Game = App->textures->Load("Resources/textures/in-game.png");
 	UI_Tex = App->textures->Load("Resources/textures/UI.png");
+	
 
 	// SENSORS
 
@@ -306,7 +307,7 @@ bool ModuleSceneIntro::Start()
   
 	// UI FONTS
 	score_font = App->fonts->Load("Resources/fonts/score.png", "1234567890", 1);
-	lifes_font = App->fonts->Load("Resources/fonts/lifes.png", "0123", 1);
+	lifes_font = App->fonts->Load("Resources/fonts/lives.png", "0123", 1);
 
 	return ret;
 }
@@ -423,6 +424,9 @@ update_status ModuleSceneIntro::Update()
 
 	App->fonts->BlitText(249, 340, score_font, score_text);
 	App->fonts->BlitText(266, 365, lifes_font, lifes_text);
+
+
+
 
 	return UPDATE_CONTINUE;
 }

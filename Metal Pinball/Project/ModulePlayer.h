@@ -4,6 +4,8 @@
 #include "Globals.h"
 #include "p2Point.h"
 
+#include "SDL/include/SDL_rect.h"
+
 struct SDL_Texture;
 
 class ModulePlayer : public Module
@@ -28,6 +30,9 @@ public:
 	int lives;
 	uint score=0;
 	bool start = false;
+	bool dead = false;
+	SDL_Texture* out_of_balls = nullptr;
+	SDL_Rect restart;
 
 	p2List<PhysBody*> Flippers;
 

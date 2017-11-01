@@ -22,8 +22,12 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
+
 	lives = 3;
 	SpawnBall();
+
+	out_of_balls = App->textures->Load("Resources/textures/out_of_balls.png");
+	restart = { 38,279,345,188 };
 	
 	int flipperRightDown[16]{ 233, 715,
 		262, 683,
@@ -80,7 +84,7 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update()
 {
 	
-	CheckDeath();
+	
 	CheckInputs();
 
 	p2List_item<PhysBody*>* iterator = Flippers.getFirst();
@@ -109,6 +113,8 @@ update_status ModulePlayer::Update()
 			break;
 		}
 	}
+	
+	CheckDeath();
 
 	return UPDATE_CONTINUE;
 	
@@ -169,31 +175,40 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 void ModulePlayer::CheckInputs()
 {
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && start)
+	if (!dead)
 	{
-		p2List_item<PhysBody*>* c = balls.getFirst();
-		SDL_Rect ball = { 0,0,20,21 };
-		while (c != NULL)
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && start)
 		{
-			c->data->body->ApplyLinearImpulse({ 0,-5 }, { 0,10 }, true);
-			c = c->next;
-			if (App->menu->fx_enabled)
-				App->audio->PlayFx(App->scene_intro->launch_FX);
+			p2List_item<PhysBody*>* c = balls.getFirst();
+			SDL_Rect ball = { 0,0,20,21 };
+			while (c != NULL)
+			{
+				c->data->body->ApplyLinearImpulse({ 0,-5 }, { 0,10 }, true);
+				c = c->next;
+				if (App->menu->fx_enabled)
+					App->audio->PlayFx(App->scene_intro->launch_FX);
+			}
+
+			start = false;
 		}
 
-		start = false;
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+
+			Flippers.getFirst()->data->body->ApplyLinearImpulse({ 0,10 }, { PIXEL_TO_METERS(12),0 }, true);
+			Flippers.getLast()->data->body->ApplyLinearImpulse({ 0,2 }, { PIXEL_TO_METERS(8),0 }, true);
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+
+			Flippers.getFirst()->next->data->body->ApplyLinearImpulse({ 0,-10 }, { PIXEL_TO_METERS(-8),PIXEL_TO_METERS(-2) }, true);
+			Flippers.getFirst()->next->next->data->body->ApplyLinearImpulse({ 0,-2 }, { PIXEL_TO_METERS(-8),PIXEL_TO_METERS(-2) }, true);
+		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-
-		Flippers.getFirst()->data->body->ApplyLinearImpulse({ 0,10 }, { PIXEL_TO_METERS(12),0 }, true);
-		Flippers.getLast()->data->body->ApplyLinearImpulse({ 0,2 }, { PIXEL_TO_METERS(8),0 }, true);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-
-		Flippers.getFirst()->next->data->body->ApplyLinearImpulse({ 0,-10 }, { PIXEL_TO_METERS(-8),PIXEL_TO_METERS(-2) }, true);
-		Flippers.getFirst()->next->next->data->body->ApplyLinearImpulse({ 0,-2 }, { PIXEL_TO_METERS(-8),PIXEL_TO_METERS(-2) }, true);
+	if (dead && (App->input->GetMouseX() > restart.x && App->input->GetMouseX() < restart.x + restart.w && App->input->GetMouseY() > restart.y && App->input->GetMouseY() < restart.y + restart.h ) && App->input->GetMouseButton(1)) {
+		dead = false;
+		lives = 3;
+		score = 0;
 	}
 
 }
@@ -210,6 +225,11 @@ void ModulePlayer::CheckDeath()
 			RespawnCounter = 0.0f;
 			SpawnBall();
 		}
+	}
+	if (lives == 0)
+	{
+		App->renderer->Blit(out_of_balls, 38, 279);
+		dead = true;
 	}
 }
 
