@@ -166,3 +166,8 @@ bool ModuleAudio::PlayFx(unsigned int id, int repeat)
 
 	return ret;
 }
+
+void ModuleAudio::PauseMusic() 
+{
+	Mix_HaltMusic();
+}

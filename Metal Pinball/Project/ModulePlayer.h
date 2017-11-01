@@ -26,7 +26,7 @@ public:
 
 	p2List<PhysBody*> balls;
 	int lives;
-	uint score;
+	uint score=0;
 	bool start = false;
 
 	p2List<PhysBody*> Flippers;

@@ -7,6 +7,7 @@
 #include "ModuleAudio.h"
 #include "ModuleSceneIntro.h"
 #include "ModuleRender.h"
+#include "ModuleMenu.h"
 
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -134,21 +135,24 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		switch (bodyB->type)
 		{
 		case ItemType::RED:
+		if (App->menu->fx_enabled)
 			App->audio->PlayFx(App->scene_intro->coin_red_FX);
-			score += 100;
-			break;
+		score+= 100;
+		break;
 		case ItemType::GREEN:
+		if (App->menu->fx_enabled)
 			App->audio->PlayFx(App->scene_intro->coin_green_FX);
-			score += 150;
-			break;
+		score += 50;
+		break;
 		case ItemType::GOLD:
+		if (App->menu->fx_enabled)
 			App->audio->PlayFx(App->scene_intro->coin_gold_FX);
-			score += 500;
-			break;
+		score += 500;
+		break;
 		case ItemType::KILLER:
-			App->audio->PlayFx(App->scene_intro->lose_FX);
+			if (App->menu->fx_enabled)
+			  App->audio->PlayFx(App->scene_intro->lose_FX);
 			App->physics->deletes.add(bodyA);
-
 			App->physics->deletes.add(App->scene_intro->wall);
 			balls.clear();
 			break;
@@ -161,9 +165,6 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			break;
 		}
 	}
-	
-	
-
 }
 
 void ModulePlayer::CheckInputs()
@@ -176,7 +177,10 @@ void ModulePlayer::CheckInputs()
 		{
 			c->data->body->ApplyLinearImpulse({ 0,-5 }, { 0,10 }, true);
 			c = c->next;
+			if (App->menu->fx_enabled)
+				App->audio->PlayFx(App->scene_intro->launch_FX);
 		}
+
 		start = false;
 	}
 
