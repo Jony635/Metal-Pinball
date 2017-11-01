@@ -1,5 +1,5 @@
 # Metal-Pinball
-Pinball Game extracted from https://www.classicgame.com/game/Metal+Pinball for practicing Box2D physics engine.
+Pinball Game extracted from (https://www.classicgame.com/game/Metal+Pinball) for practicing Box2D physics engine.
 
 ## Get our latest release [HERE](https://github.com/Jony635/Metal-Pinball/files/1435411/METAL_PINBALL_v1.0.zip)
 
