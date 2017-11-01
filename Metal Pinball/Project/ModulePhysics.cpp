@@ -59,39 +59,45 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, b2BodyType type, ItemType i_type)
+PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, ItemType type, b2BodyType b_type)
 {
 	b2BodyDef body;
-	body.type = type;
-	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-	if(i_type==BALL)
+	body.type = b_type;
+	body.position.Set(PIXEL_TO_METERS(x) + PIXEL_TO_METERS(radius), PIXEL_TO_METERS(y) + PIXEL_TO_METERS(radius));
+	if(type==ItemType::BALL)
 		body.bullet = true;
 	b2Body* b = world->CreateBody(&body);
+	
+	b2CircleShape circle;
+	circle.m_radius = PIXEL_TO_METERS(radius);
 
-	b2CircleShape shape;
-	shape.m_radius = PIXEL_TO_METERS(radius);
 	b2FixtureDef fixture;
-	fixture.shape = &shape;
-	fixture.density = 1.17f;
-
+	fixture.shape = &circle;
+	fixture.density = 1.0f;
+	if (type == ItemType::BALL)
+		fixture.restitution = 0.1f;
+	else
+		fixture.restitution = 0.5f;
 	b->CreateFixture(&fixture);
 
 	PhysBody* pbody = new PhysBody();
 	pbody->body = b;
 	b->SetUserData(pbody);
-	pbody->width = pbody->height = radius;
+	pbody->type = type;
+	pbody->listener = (Module*)App->scene_intro;
 	pbody->physics = this;
-	pbody->type = i_type;
+	pbody->width = radius;
+	pbody->height = radius;
 
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
+PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, float32 angle)
 {
 	b2BodyDef body;
 	body.type = b2_staticBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-	body.angle = DEGTORAD * 30;
+	body.angle = DEGTORAD * angle;
 
 	b2Body* b = world->CreateBody(&body);
 	b2PolygonShape box;
@@ -150,8 +156,6 @@ PhysBody* ModulePhysics::CreateCircleSensor(int x, int y, int radius, ItemType t
 
 	b2Body* b = world->CreateBody(&body);
 
-
-
 	b2CircleShape circle;
 	circle.m_radius = PIXEL_TO_METERS(radius);
 
@@ -168,6 +172,7 @@ PhysBody* ModulePhysics::CreateCircleSensor(int x, int y, int radius, ItemType t
 	pbody->type = type;
 	pbody->listener = (Module*)App->scene_intro;
 	pbody->physics = this;
+	
 
 	return pbody;
 }
@@ -540,7 +545,7 @@ void ModulePhysics::CreateBodies()
 		{
 		case ItemType::WALL:
 			if (App->scene_intro->wall == nullptr)
-				App->scene_intro->wall = CreateRectangle(306, 50, 7, 40);
+				App->scene_intro->wall = CreateRectangle(306, 50, 7, 40, 30);
 			break;
 		}
 	}

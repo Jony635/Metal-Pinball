@@ -86,9 +86,9 @@ bool ModuleSceneIntro::Start()
 		sensors.add(App->physics->CreateCircleSensor(242, 24, 14.5, GREEN));
 
 		// Reds
-		sensors.add(App->physics->CreateCircleSensor(121, 136, 18, RED));
-		sensors.add(App->physics->CreateCircleSensor(197, 99, 18, RED));
-		sensors.add(App->physics->CreateCircleSensor(265, 136, 18, RED));
+		sensors.add(App->physics->CreateCircle(121, 136, 18, RED));
+		sensors.add(App->physics->CreateCircle(197, 99, 18, RED));
+		sensors.add(App->physics->CreateCircle(265, 136, 18, RED));
 
 
 		// Gold
@@ -365,21 +365,19 @@ update_status ModuleSceneIntro::Update()
 	//Blit UI
 	App->renderer->Blit(UI_Tex, 140, 330);
 
-
-		//Blit wall
-		if (wall)
-		{
-			int x, y;
-			wall->GetPosition(x, y);
-			SDL_Rect wall_r;
-			wall_r.x = 229;
-			wall_r.y = 0;
-			wall_r.w = 27;
-			wall_r.h = 38;
-			App->renderer->Blit(items_tex, x-10, y+2, &wall_r);
-		}
+	//Blit wall
+	if (wall)
+	{
+		int x, y;
+		wall->GetPosition(x, y);
+		SDL_Rect wall_r;
+		wall_r.x = 229;
+		wall_r.y = 0;
+		wall_r.w = 27;
+		wall_r.h = 38;
+		App->renderer->Blit(items_tex, x-10, y+2, &wall_r);
+	}
 			
-
 	// Prepare for raycast ------------------------------------------------------
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
@@ -433,23 +431,10 @@ update_status ModuleSceneIntro::Update()
 
 void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	
 }
 
 
 void ModuleSceneIntro::CheckInputs()
 {
-
-
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	{
-		App->player->score+=1000;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		App->player->score--;
-	}
-
 }
 

@@ -32,9 +32,9 @@ bool ModuleMenu::Start()
 
 	if (options[MenuOptions::PLAY].rec_body == nullptr)
 	{
-		options[MenuOptions::PLAY].rec_body = App->physics->CreateRectangle(87, 268, 241, 22);
-		options[MenuOptions::SOUND].rec_body = App->physics->CreateRectangle(161, 322, 99, 21);
-		options[MenuOptions::MUSIC].rec_body = App->physics->CreateRectangle(168, 354, 86, 21);
+		options[MenuOptions::PLAY].rec_body = App->physics->CreateRectangle(87 + 241/2, 268 + 11, 241, 22);
+		options[MenuOptions::SOUND].rec_body = App->physics->CreateRectangle(161 + 50, 322 + 11, 99, 21);
+		options[MenuOptions::MUSIC].rec_body = App->physics->CreateRectangle(168 + 86/2, 354 + 21/2, 86, 21);
 	}
 
 	return true;
@@ -77,17 +77,17 @@ void ModuleMenu::CheckInputs()
 {
 	if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		if (options[MenuOptions::PLAY].rec_body->Contains(App->input->GetMouseX() - 241 / 2, App->input->GetMouseY() - 11))
+		if (options[MenuOptions::PLAY].rec_body->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
 		{
 			options[MenuOptions::PLAY].chosen = true;
 		}
-		else if (options[MenuOptions::SOUND].rec_body->Contains(App->input->GetMouseX() - 50, App->input->GetMouseY() - 11))
+		else if (options[MenuOptions::SOUND].rec_body->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
 		{
 			options[MenuOptions::SOUND].chosen = !options[MenuOptions::SOUND].chosen;
 			App->audio->PlayFx(menu_select);
 			fx_enabled = options[MenuOptions::SOUND].chosen;
 		}
-		else if (options[MenuOptions::MUSIC].rec_body->Contains(App->input->GetMouseX() - 86 / 2, App->input->GetMouseY() - 21 / 2))
+		else if (options[MenuOptions::MUSIC].rec_body->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
 		{
 			options[MenuOptions::MUSIC].chosen = !options[MenuOptions::MUSIC].chosen;
 		}
@@ -100,13 +100,13 @@ void ModuleMenu::OptionEffects()
 	{
 		int x, y;
 		options[MenuOptions::SOUND].rec_body->GetPosition(x, y);
-		App->renderer->Blit(sound_enabled_TEX, x + 50, y + 11);
+		App->renderer->Blit(sound_enabled_TEX, x, y);
 	}
 	if (options[MenuOptions::MUSIC].chosen)
 	{
 		int x, y;
 		options[MenuOptions::MUSIC].rec_body->GetPosition(x, y);
-		App->renderer->Blit(music_enabled_TEX, x + 86 / 2, y + 21 / 2);
+		App->renderer->Blit(music_enabled_TEX, x, y);
 		if (!music_enabled) 
 		{
 			if (fx_enabled)
