@@ -37,10 +37,12 @@ public:
 	void OptionEffects();
 public:
 	SDL_Texture* menutex = nullptr;
-	SDL_Texture* sound_enabled = nullptr;
-	SDL_Texture* music_enabled = nullptr;
+	SDL_Texture* sound_enabled_TEX = nullptr;
+	SDL_Texture* music_enabled_TEX = nullptr;
 
 	Option* options = nullptr;
 
-
+	int menu_select;
+	bool music_enabled = false;
+	bool fx_enabled = false;
 };

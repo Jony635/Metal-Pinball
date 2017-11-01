@@ -24,8 +24,9 @@ enum MenuOptions
 bool ModuleMenu::Start()
 {
 	menutex = App->textures->Load("Resources/textures/start-screen.png");
-	sound_enabled = App->textures->Load("Resources/textures/sound_enabled.png");
-	music_enabled = App->textures->Load("Resources/textures/music_enabled.png");
+	sound_enabled_TEX = App->textures->Load("Resources/textures/sound_enabled.png");
+	music_enabled_TEX = App->textures->Load("Resources/textures/music_enabled.png");
+	menu_select = App->audio->LoadFx("Resources/audios/fx/menu_select.wav");
 
 	options = new Option[MAX_OPT];
 
@@ -83,6 +84,8 @@ void ModuleMenu::CheckInputs()
 		else if (options[MenuOptions::SOUND].rec_body->Contains(App->input->GetMouseX() - 50, App->input->GetMouseY() - 11))
 		{
 			options[MenuOptions::SOUND].chosen = !options[MenuOptions::SOUND].chosen;
+			App->audio->PlayFx(menu_select);
+			fx_enabled = options[MenuOptions::SOUND].chosen;
 		}
 		else if (options[MenuOptions::MUSIC].rec_body->Contains(App->input->GetMouseX() - 86 / 2, App->input->GetMouseY() - 21 / 2))
 		{
@@ -97,15 +100,27 @@ void ModuleMenu::OptionEffects()
 	{
 		int x, y;
 		options[MenuOptions::SOUND].rec_body->GetPosition(x, y);
-		App->renderer->Blit(sound_enabled, x + 50, y + 11);
+		App->renderer->Blit(sound_enabled_TEX, x + 50, y + 11);
 	}
 	if (options[MenuOptions::MUSIC].chosen)
 	{
 		int x, y;
 		options[MenuOptions::MUSIC].rec_body->GetPosition(x, y);
-		App->renderer->Blit(music_enabled, x + 86 / 2, y + 21 / 2);
+		App->renderer->Blit(music_enabled_TEX, x + 86 / 2, y + 21 / 2);
+		if (!music_enabled) 
+		{
+			App->audio->PlayMusic("Resources/audios/music/soundtrack.ogg", -1);
+			music_enabled = true;
+		}
 	}
-
+	else
+	{
+		if (music_enabled)
+		{
+			App->audio->PauseMusic();
+			music_enabled = false;
+		}
+	}
 	if (options[MenuOptions::PLAY].chosen)
 	{
 		GoInGame();

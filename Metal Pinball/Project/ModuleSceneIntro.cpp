@@ -8,6 +8,7 @@
 #include "ModulePhysics.h"
 #include "ModulePlayer.h"
 #include "ModuleFonts.h"
+#include "ModuleMenu.h"
 
 #include<stdio.h>
 
@@ -59,7 +60,11 @@ bool ModuleSceneIntro::Start()
 	coin_red_FX = App->audio->LoadFx("Resources/audios/fx/coin_red.wav");
 	launch_FX = App->audio->LoadFx("Resources/audios/fx/launch.wav");
 	lose_FX = App->audio->LoadFx("Resources/audios/fx/lose.wav");
-	App->audio->PlayMusic("Resources/audios/music/soundtrack.ogg",-1);
+	if (App->menu->music_enabled)
+	{
+		App->audio->PlayMusic("Resources/audios/music/soundtrack.ogg",-1);
+	}
+	
 	items_tex = App->textures->Load("Resources/textures/items.png");
 	in_Game = App->textures->Load("Resources/textures/in-game.png");
 	UI_Tex = App->textures->Load("Resources/textures/UI.png");
@@ -318,40 +323,40 @@ bool ModuleSceneIntro::CleanUp()
 update_status ModuleSceneIntro::Update()
 {
 	CheckInputs();
-	
+
 	//BLITS----------------------------------------------------------------------
 
 		//Blit screem
-		App->renderer->Blit(in_Game, 0, 0);
+	App->renderer->Blit(in_Game, 0, 0);
 
-		//Blit ship
-		App->renderer->Blit(items_tex, 379, 663, &ship_sprite, 1.0f);
+	//Blit ship
+	App->renderer->Blit(items_tex, 379, 663, &ship_sprite, 1.0f);
 
-		//Blit gold coins
-		SDL_Rect gold_coin_currFrame = gold_coin_ANIM.GetCurrentFrame();
-		App->renderer->Blit(items_tex, 60, 225, &gold_coin_currFrame);
-		App->renderer->Blit(items_tex, 327, 147, &gold_coin_currFrame);
+	//Blit gold coins
+	SDL_Rect gold_coin_currFrame = gold_coin_ANIM.GetCurrentFrame();
+	App->renderer->Blit(items_tex, 60, 225, &gold_coin_currFrame);
+	App->renderer->Blit(items_tex, 327, 147, &gold_coin_currFrame);
 
-		//Blit red coins
-		SDL_Rect red_coin_currFrame = red_coin_ANIM.GetCurrentFrame();
-		App->renderer->Blit(items_tex, 121, 135, &red_coin_currFrame);
-		App->renderer->Blit(items_tex, 197, 98, &red_coin_currFrame);
-		App->renderer->Blit(items_tex, 265, 135, &red_coin_currFrame);
+	//Blit red coins
+	SDL_Rect red_coin_currFrame = red_coin_ANIM.GetCurrentFrame();
+	App->renderer->Blit(items_tex, 121, 135, &red_coin_currFrame);
+	App->renderer->Blit(items_tex, 197, 98, &red_coin_currFrame);
+	App->renderer->Blit(items_tex, 265, 135, &red_coin_currFrame);
 
-		//Blit green coins
-		SDL_Rect green_coin_currFrame = green_coin_ANIM.GetCurrentFrame();
-		App->renderer->Blit(items_tex, 140, 25, &green_coin_currFrame);
-		App->renderer->Blit(items_tex, 190, 16, &green_coin_currFrame);
-		App->renderer->Blit(items_tex, 243, 23, &green_coin_currFrame);
-		App->renderer->Blit(items_tex, 203, 219, &green_coin_currFrame);
-		App->renderer->Blit(items_tex, 107, 309, &green_coin_currFrame);
-		App->renderer->Blit(items_tex, 292, 309, &green_coin_currFrame);
-		App->renderer->Blit(items_tex, 203, 396, &green_coin_currFrame);
+	//Blit green coins
+	SDL_Rect green_coin_currFrame = green_coin_ANIM.GetCurrentFrame();
+	App->renderer->Blit(items_tex, 140, 25, &green_coin_currFrame);
+	App->renderer->Blit(items_tex, 190, 16, &green_coin_currFrame);
+	App->renderer->Blit(items_tex, 243, 23, &green_coin_currFrame);
+	App->renderer->Blit(items_tex, 203, 219, &green_coin_currFrame);
+	App->renderer->Blit(items_tex, 107, 309, &green_coin_currFrame);
+	App->renderer->Blit(items_tex, 292, 309, &green_coin_currFrame);
+	App->renderer->Blit(items_tex, 203, 396, &green_coin_currFrame);
 
-		//Blit UI
-		App->renderer->Blit(UI_Tex, 140, 330);
+	//Blit UI
+	App->renderer->Blit(UI_Tex, 140, 330);
 
-		
+
 	// Prepare for raycast ------------------------------------------------------
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
@@ -364,7 +369,7 @@ update_status ModuleSceneIntro::Update()
 	p2List_item<PhysBody*>* c;
 
 	c = App->player->balls.getFirst();
-	
+
 	SDL_Rect ball = { 0,0,20,21 };
 	while (c != NULL)
 	{
@@ -373,26 +378,28 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(items_tex, x, y, &ball, 1.0f);
 		c = c->next;
 	}
-	
+
 
 	// ray -----------------
-	if(ray_on == true)
+	if (ray_on == true)
 	{
-		fVector destination(mouse.x-ray.x, mouse.y-ray.y);
+		fVector destination(mouse.x - ray.x, mouse.y - ray.y);
 		destination.Normalize();
 		destination *= ray_hit;
 
 		App->renderer->DrawLine(ray.x, ray.y, ray.x + destination.x, ray.y + destination.y, 255, 255, 255);
 
-		if(normal.x != 0.0f)
+		if (normal.x != 0.0f)
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
 
+	if (App->player->score > 99999)
+		App->player->score = 99999;
+
 	sprintf_s(score_text, 10, "%7d", App->player->score);
-	sprintf_s(lifes_text, 10, "%7d", App->player->lives+1);
+	sprintf_s(lifes_text, 10, "%7d", App->player->lives + 1);
 
-	App->fonts->BlitText(254, 340, score_font, score_text);
-
+	App->fonts->BlitText(249, 340, score_font, score_text);
 	App->fonts->BlitText(266, 365, lifes_font, lifes_text);
 
 	return UPDATE_CONTINUE;
@@ -428,7 +435,7 @@ void ModuleSceneIntro::CheckInputs()
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		App->player->score++;
+		App->player->score+=1000;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
