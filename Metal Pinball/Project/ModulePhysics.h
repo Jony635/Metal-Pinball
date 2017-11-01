@@ -21,6 +21,8 @@ enum ItemType
 	GOLD,
 	BALL,
 	KILLER,
+	WALL_SENS,
+	WALL,
 
 	INITIAL_CHAIN
 };
@@ -72,6 +74,7 @@ public:
 	b2World* world;
 
 	p2List<PhysBody*> deletes;
+	p2List<ItemType> creates;
 
 private:
 
@@ -80,4 +83,8 @@ private:
 	b2MouseJoint* mouse_joint;
 	b2Body* ground;
 	b2Body* body_clicked = nullptr;
+
+	void DrawObjects();
+	void DeleteBodies();
+	void CreateBodies();
 };

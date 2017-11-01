@@ -26,6 +26,8 @@ public:
 	p2List<PhysBody*> chains;
 	p2List<PhysBody*> sensors;
 	p2List_item<PhysBody*>* initialchain = nullptr;
+	PhysBody* wall_sensor = nullptr;
+	PhysBody* wall = nullptr;
 
 	bool sensed;
 
