@@ -109,6 +109,9 @@ void ModuleMenu::OptionEffects()
 		App->renderer->Blit(music_enabled_TEX, x + 86 / 2, y + 21 / 2);
 		if (!music_enabled) 
 		{
+			if (fx_enabled)
+				App->audio->PlayFx(menu_select);
+
 			App->audio->PlayMusic("Resources/audios/music/soundtrack.ogg", -1);
 			music_enabled = true;
 		}
