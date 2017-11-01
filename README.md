@@ -41,5 +41,5 @@ Get a lot of points before losing all the balls
 
 That's all!
 
-## Repository Link
-(https://github.com/Jony635/Metal-Pinball)
+## Repository Link [HERE](https://github.com/Jony635/Metal-Pinball)
+
