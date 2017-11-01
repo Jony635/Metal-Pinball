@@ -126,19 +126,19 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	switch (bodyB->type)
 	{
 	case ItemType::RED:
-		App->audio->PlayFx(App->scene_intro->coin_red);
+		App->audio->PlayFx(App->scene_intro->coin_red_FX);
 		score+= 100;
 		break;
 	case ItemType::GREEN:
-		App->audio->PlayFx(App->scene_intro->coin_green);
+		App->audio->PlayFx(App->scene_intro->coin_green_FX);
 		score += 150;
 		break;
 	case ItemType::GOLD:
-		App->audio->PlayFx(App->scene_intro->coin_gold);
+		App->audio->PlayFx(App->scene_intro->coin_gold_FX);
 		score += 500;
 		break;
 	case ItemType::KILLER:
-		App->audio->PlayFx(App->scene_intro->lose);
+		App->audio->PlayFx(App->scene_intro->lose_FX);
 		App->physics->deletes.add(bodyA);
 		balls.clear();
 		break;

@@ -32,14 +32,17 @@ public:
 
 	SDL_Texture* in_Game=nullptr;
 	SDL_Texture* items_tex = nullptr;
-	SDL_Texture* coins = nullptr;
-	Animation gold_coin;
 
-	uint coin_gold;
-	uint coin_red;
-	uint coin_green;
-	uint launch;
-	uint lose;
+	Animation gold_coin_ANIM;
+	Animation green_coin_ANIM;
+	Animation red_coin_ANIM;
+	SDL_Rect ship_sprite;
+
+	uint coin_gold_FX;
+	uint coin_red_FX;
+	uint coin_green_FX;
+	uint launch_FX;
+	uint lose_FX;
 
 
 	p2Point<int> ray;
