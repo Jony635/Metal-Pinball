@@ -116,40 +116,54 @@ update_status ModulePlayer::Update()
 
 void ModulePlayer::SpawnBall() 
 {
+
 	balls.add(App->physics->CreateCircle(395, 500, 10,b2_dynamicBody, BALL));
 	balls.getLast()->data->listener = this;
 	balls.getLast()->data->physics = App->physics;
+
+	//Spawn Wall Sensor
+	App->scene_intro->wall_sensor = App->physics->CreateRectangleSensor(285, 40, 7, 40);
+	App->scene_intro->wall_sensor->type = ItemType::WALL_SENS;
+
 	start = false;
 }
 
 void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB) 
 {
-	switch (bodyB->type)
+	if(bodyA->type==ItemType::BALL)
 	{
-	case ItemType::RED:
+		switch (bodyB->type)
+		{
+		case ItemType::RED:
 		if (App->menu->fx_enabled)
 			App->audio->PlayFx(App->scene_intro->coin_red_FX);
 		score+= 100;
 		break;
-	case ItemType::GREEN:
+		case ItemType::GREEN:
 		if (App->menu->fx_enabled)
 			App->audio->PlayFx(App->scene_intro->coin_green_FX);
 		score += 50;
 		break;
-	case ItemType::GOLD:
+		case ItemType::GOLD:
 		if (App->menu->fx_enabled)
 			App->audio->PlayFx(App->scene_intro->coin_gold_FX);
 		score += 500;
 		break;
-	case ItemType::KILLER:
-		if (App->menu->fx_enabled)
-			App->audio->PlayFx(App->scene_intro->lose_FX);
-		App->physics->deletes.add(bodyA);
-		balls.clear();
-		break;
-	case ItemType::INITIAL_CHAIN:
-		start = true;
-		break;
+		case ItemType::KILLER:
+			if (App->menu->fx_enabled)
+			  App->audio->PlayFx(App->scene_intro->lose_FX);
+			App->physics->deletes.add(bodyA);
+			App->physics->deletes.add(App->scene_intro->wall);
+			balls.clear();
+			break;
+		case ItemType::WALL_SENS:
+			App->physics->deletes.add(App->scene_intro->wall_sensor);
+			App->physics->creates.add(WALL);
+			break;
+		case ItemType::INITIAL_CHAIN:
+			start = true;
+			break;
+		}
 	}
 }
 
