@@ -32,6 +32,7 @@ public:
 
 	SDL_Texture* in_Game=nullptr;
 	SDL_Texture* items_tex = nullptr;
+	SDL_Texture* UI_Tex = nullptr;
 
 	Animation gold_coin_ANIM;
 	Animation green_coin_ANIM;
@@ -47,4 +48,10 @@ public:
 
 	p2Point<int> ray;
 	bool ray_on;
+
+	char score_text[10];
+	char lifes_text[10];
+
+	int score_font;
+	int lifes_font;
 };

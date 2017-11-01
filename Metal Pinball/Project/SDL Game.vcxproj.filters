@@ -58,9 +58,12 @@
     </ClInclude>
     <ClInclude Include="ModuleMenu.h">
       <Filter>Header Files</Filter>
-     </ClInclude>
+    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Header Files\Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleFonts.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +101,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ModuleMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleFonts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

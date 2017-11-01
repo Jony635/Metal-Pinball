@@ -10,6 +10,7 @@
 #include "ModuleSceneIntro.h"
 #include "ModuleMenu.h"
 #include "Application.h"
+#include "ModuleFonts.h"
 
 Application::Application()
 {
@@ -22,6 +23,7 @@ Application::Application()
 	menu = new ModuleMenu(this);
 	scene_intro = new ModuleSceneIntro(this, false);
 	physics = new ModulePhysics(this);
+	fonts = new ModuleFonts(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -34,15 +36,14 @@ Application::Application()
 	AddModule(textures);
 	AddModule(input);
 	AddModule(audio);
+	AddModule(fonts);
 	// Scenes
 	AddModule(menu);
 	AddModule(scene_intro);
 
 	// Player
 	AddModule(player);
-
-	
-	
+		
 	
 }
 

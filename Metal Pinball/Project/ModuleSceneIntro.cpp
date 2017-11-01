@@ -7,6 +7,10 @@
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
 #include "ModulePlayer.h"
+#include "ModuleFonts.h"
+
+#include<stdio.h>
+
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -58,7 +62,7 @@ bool ModuleSceneIntro::Start()
 	App->audio->PlayMusic("Resources/audios/music/soundtrack.ogg",-1);
 	items_tex = App->textures->Load("Resources/textures/items.png");
 	in_Game = App->textures->Load("Resources/textures/in-game.png");
-
+	UI_Tex = App->textures->Load("Resources/textures/UI.png");
 
 	// SENSORS:
 
@@ -295,8 +299,9 @@ bool ModuleSceneIntro::Start()
 	initialchain= chains.add(App->physics->CreateChain(0, 0, in_game7, 8, b2_staticBody));
 	initialchain->data->type = INITIAL_CHAIN;
 
-	
 
+	score_font = App->fonts->Load("Resources/fonts/score.png", "1234567890", 1);
+	lifes_font = App->fonts->Load("Resources/fonts/lifes.png", "0123", 1);
 
 	return ret;
 }
@@ -343,6 +348,10 @@ update_status ModuleSceneIntro::Update()
 		App->renderer->Blit(items_tex, 292, 309, &green_coin_currFrame);
 		App->renderer->Blit(items_tex, 203, 396, &green_coin_currFrame);
 
+		//Blit UI
+		App->renderer->Blit(UI_Tex, 140, 330);
+
+		
 	// Prepare for raycast ------------------------------------------------------
 	iPoint mouse;
 	mouse.x = App->input->GetMouseX();
@@ -379,7 +388,12 @@ update_status ModuleSceneIntro::Update()
 			App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
 	}
 
-	
+	sprintf_s(score_text, 10, "%7d", App->player->score);
+	sprintf_s(lifes_text, 10, "%7d", App->player->lives+1);
+
+	App->fonts->BlitText(254, 340, score_font, score_text);
+
+	App->fonts->BlitText(266, 365, lifes_font, lifes_text);
 
 	return UPDATE_CONTINUE;
 }
@@ -410,6 +424,17 @@ void ModuleSceneIntro::CheckInputs()
 	{
 		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 15));
 	}*/
+
+
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	{
+		App->player->score++;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		App->player->score--;
+	}
 
 }
 
