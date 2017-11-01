@@ -36,7 +36,10 @@ Oscar Hernández and Jonathan Molina-Prados, members of Flan Studio's programmin
 - *Right_Arrow*: Move Right Flippers.
 - *Space_Bar*: Shoot the Ball.
 
-## Instructions:
+## Instructions
 Get a lot of points before losing all the balls
 
 That's all!
+
+## Repository Link
+(https://github.com/Jony635/Metal-Pinball)
