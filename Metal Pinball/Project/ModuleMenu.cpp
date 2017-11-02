@@ -62,7 +62,10 @@ bool ModuleMenu::CleanUp()
 		delete[] options;
 		options = nullptr;
 	}
-
+	App->textures->Unload(menutex);
+	App->textures->Unload(sound_enabled_TEX);
+	App->textures->Unload(music_enabled_TEX);
+	
 	return true;
 }
 

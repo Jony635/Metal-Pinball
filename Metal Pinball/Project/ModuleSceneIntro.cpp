@@ -317,13 +317,18 @@ bool ModuleSceneIntro::CleanUp()
 {
 	LOG("Unloading Intro scene");
 	
-	for (p2List_item<PhysBody*>* it_pbody = sensors.getFirst(); it_pbody != nullptr; it_pbody = it_pbody->next)
-	{
-		it_pbody->data->~PhysBody();
-	}
+	//UnLoading Textures
+	App->textures->Unload(items_tex);
+	App->textures->Unload(in_Game);
+	App->textures->Unload(UI_Tex);
+
+	//Freeing Lists (Not physbodys, those will be deleted when App->physics->world does
 	sensors.clear();
+	chains.clear();
 
-
+	//Freeing fonts
+	App->fonts->UnLoad(score_font);
+	App->fonts->UnLoad(lifes_font);
 
 	return true;
 }

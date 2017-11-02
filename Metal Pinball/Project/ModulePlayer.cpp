@@ -78,16 +78,22 @@ bool ModulePlayer::CleanUp()
 {
 	LOG("Unloading player");
 
+	//Unload textures
+	App->textures->Unload(out_of_balls);
+	
+	//Freeing lists (not physbodies)
+	Flippers.clear();
+
 	return true;
 }
 
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	
-	
+
 	CheckInputs();
 
+	//FLIPPERS BLIT
 	p2List_item<PhysBody*>* iterator = Flippers.getFirst();
 	for (int i =0; iterator != nullptr; iterator = iterator->next, ++i) 
 	{
@@ -212,13 +218,21 @@ void ModulePlayer::CheckInputs()
 		}
 	}
 
-	if (dead && (App->input->GetMouseX() > restart.x && App->input->GetMouseX() < restart.x + restart.w && App->input->GetMouseY() > restart.y && App->input->GetMouseY() < restart.y + restart.h ) && App->input->GetMouseButton(1)) {
+	if (dead && 
+
+			(App->input->GetMouseX() > restart.x && 
+
+			App->input->GetMouseX() < restart.x + restart.w && 
+			App->input->GetMouseY() > restart.y && 
+			App->input->GetMouseY() < restart.y + restart.h )
+
+			&& App->input->GetMouseButton(1)) {
 		
-		dead = false;
-		lives = 3;
-		score = 0;
-		RespawnCounter = 0.0f;
-		SpawnBall();
+			dead = false;
+			lives = 3;
+			score = 0;
+			RespawnCounter = 0.0f;
+			SpawnBall();
 	}
 
 }
