@@ -1,4 +1,4 @@
-# Metal-Pinball
+﻿# Metal-Pinball
 Pinball Game extracted from [https://www.classicgame.com/game/Metal+Pinball](https://www.classicgame.com/game/Metal+Pinball) for practicing Box2D physics engine.
 
 ## Get our latest release [HERE](https://github.com/Jony635/Metal-Pinball/files/1435411/METAL_PINBALL_v1.0.zip)
@@ -31,7 +31,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 For more information, please refer to <http://unlicense.org/>
 
 ## Authors
-Oscar Hernández and Jonathan Molina-Prados, members of Flan Studio's programming departament, are the authors of this remake.
+Oscar Hernández and Jonathan Molina-Prados, members of Flan Studio's programming department, are the authors of this remake.
 
 ## Controls
 - *Mouse_Left_Button*: Choose between different options in the main menu.
