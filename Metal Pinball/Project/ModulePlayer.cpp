@@ -231,7 +231,8 @@ void ModulePlayer::CheckDeath()
 
 		if (RespawnCounter >= 1.5f)
 		{
-			lives--;
+			if(!App->GodMode)
+				lives--;
 			RespawnCounter = 0.0f;
 			SpawnBall();
 		}

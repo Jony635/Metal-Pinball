@@ -12,8 +12,13 @@
 #include "Application.h"
 #include "ModuleFonts.h"
 
-Application::Application()
+Application::Application(int argc, char ** argv)
 {
+	if (argc > 1)
+		if (strcmp(argv[argc-1], "godmode")==0)
+			GodMode = true;
+
+
 	renderer = new ModuleRender(this);
 	window = new ModuleWindow(this);
 	textures = new ModuleTextures(this);

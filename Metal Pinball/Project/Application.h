@@ -36,13 +36,14 @@ private:
 
 public:
 
-	Application();
+	Application(int argc, char ** argv);
 	~Application();
 
 	bool Init();
 	update_status Update();
 	bool CleanUp();
 
+	bool GodMode = false;
 private:
 
 	void AddModule(Module* mod);
