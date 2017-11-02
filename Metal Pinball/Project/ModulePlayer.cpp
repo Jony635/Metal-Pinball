@@ -24,6 +24,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	lives = 3;
+	dead = false;
 	SpawnBall();
 
 	out_of_balls = App->textures->Load("Resources/textures/out_of_balls.png");
@@ -113,8 +114,12 @@ update_status ModulePlayer::Update()
 			break;
 		}
 	}
-	
-	CheckDeath();
+
+	if(!dead)
+		CheckDeath();
+
+	if(dead)
+		App->renderer->Blit(out_of_balls, 38, 279);
 
 	return UPDATE_CONTINUE;
 	
@@ -123,7 +128,7 @@ update_status ModulePlayer::Update()
 void ModulePlayer::SpawnBall() 
 {
 
-	balls.add(App->physics->CreateCircle(395, 500, 10, BALL, b2_dynamicBody));
+	balls.add(App->physics->CreateCircle(385, 500, 10, BALL, b2_dynamicBody));
 	balls.getLast()->data->listener = this;
 	balls.getLast()->data->physics = App->physics;
 
@@ -161,6 +166,8 @@ void ModulePlayer::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 			App->physics->deletes.add(bodyA);
 			App->physics->deletes.add(App->scene_intro->wall);
 			balls.clear();
+			if (this->lives == 0)
+				dead = true;
 			break;
 		case ItemType::WALL_SENS:
 			App->physics->deletes.add(App->scene_intro->wall_sensor);
@@ -206,9 +213,12 @@ void ModulePlayer::CheckInputs()
 	}
 
 	if (dead && (App->input->GetMouseX() > restart.x && App->input->GetMouseX() < restart.x + restart.w && App->input->GetMouseY() > restart.y && App->input->GetMouseY() < restart.y + restart.h ) && App->input->GetMouseButton(1)) {
+		
 		dead = false;
 		lives = 3;
 		score = 0;
+		RespawnCounter = 0.0f;
+		SpawnBall();
 	}
 
 }
@@ -225,11 +235,6 @@ void ModulePlayer::CheckDeath()
 			RespawnCounter = 0.0f;
 			SpawnBall();
 		}
-	}
-	if (lives == 0)
-	{
-		App->renderer->Blit(out_of_balls, 38, 279);
-		dead = true;
 	}
 }
 
