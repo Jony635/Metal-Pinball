@@ -33,8 +33,11 @@ bool ModuleMenu::Start()
 	if (options[MenuOptions::PLAY].rec_body == nullptr)
 	{
 		options[MenuOptions::PLAY].rec_body = App->physics->CreateRectangle(87 + 241/2, 268 + 11, 241, 22);
+		options[MenuOptions::PLAY].rec_body->physics = App->physics;
 		options[MenuOptions::SOUND].rec_body = App->physics->CreateRectangle(161 + 50, 322 + 11, 99, 21);
+		options[MenuOptions::SOUND].rec_body->physics = App->physics;
 		options[MenuOptions::MUSIC].rec_body = App->physics->CreateRectangle(168 + 86/2, 354 + 21/2, 86, 21);
+		options[MenuOptions::MUSIC].rec_body->physics = App->physics;
 	}
 
 	return true;
@@ -53,12 +56,15 @@ bool ModuleMenu::CleanUp()
 {
 	if( options != nullptr && options[MenuOptions::PLAY].rec_body!=nullptr)
 	{
-		App->physics->world->DestroyBody(options[MenuOptions::PLAY].rec_body->body);
-		App->physics->world->DestroyBody(options[MenuOptions::SOUND].rec_body->body);
-		App->physics->world->DestroyBody(options[MenuOptions::MUSIC].rec_body->body);
+		delete options[MenuOptions::PLAY].rec_body;
 		options[MenuOptions::PLAY].rec_body = nullptr;
+		
+		delete options[MenuOptions::SOUND].rec_body;
 		options[MenuOptions::SOUND].rec_body = nullptr;
+
+		delete options[MenuOptions::MUSIC].rec_body;
 		options[MenuOptions::MUSIC].rec_body = nullptr;
+
 		delete[] options;
 		options = nullptr;
 	}

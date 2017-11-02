@@ -257,7 +257,7 @@ float PhysBody::GetRotation() const
 
 PhysBody::~PhysBody()
 {
-	if (physics != nullptr)
+	if (physics != nullptr && this->body != nullptr)
 	{
 		physics->world->DestroyBody(body);
 	}

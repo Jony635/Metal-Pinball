@@ -95,6 +95,11 @@ bool ModuleSceneIntro::Start()
 		sensors.add(App->physics->CreateCircleSensor(60, 227, 12, GOLD));
 		sensors.add(App->physics->CreateCircleSensor(327, 149, 12, GOLD));
 
+		for (p2List_item<PhysBody*>* p_body = sensors.getFirst(); p_body != nullptr; p_body = p_body->next)
+		{
+			p_body->data->physics = App->physics;
+		}
+
 	// CHAINS:
 	int in_game1[126] = {
 		375, 741,
@@ -304,7 +309,11 @@ bool ModuleSceneIntro::Start()
 	App->player->ChainDL = chains.add(App->physics->CreateChain(0, 0, in_game6, 18, b2_staticBody));
 	initialchain= chains.add(App->physics->CreateChain(0, 0, in_game7, 8, b2_staticBody));
 	initialchain->data->type = INITIAL_CHAIN;
-  
+	for (p2List_item<PhysBody*>* p_body = chains.getFirst(); p_body != nullptr; p_body = p_body->next)
+	{
+		p_body->data->physics = App->physics;
+	}
+
 	// UI FONTS
 	score_font = App->fonts->Load("Resources/fonts/score.png", "1234567890", 1);
 	lifes_font = App->fonts->Load("Resources/fonts/lives.png", "0123", 1);

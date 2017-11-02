@@ -10,13 +10,8 @@ struct SDL_Texture;
 class Option
 {
 public:
-	
 	bool chosen;
 	PhysBody* rec_body = nullptr;
-
-
-
-
 	Option() : chosen(false){}
 };
 

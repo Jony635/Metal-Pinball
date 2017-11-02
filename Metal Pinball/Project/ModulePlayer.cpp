@@ -69,6 +69,10 @@ bool ModulePlayer::Start()
 	Flippers.add(App->physics->CreateFlipper(0, 0, flipperRightDown, 16, ChainDR->data));
 	Flippers.add(App->physics->CreateFlipper(0, 0, flipperRightUp, 16, ChainUR->data));
 	Flippers.add(App->physics->CreateFlipper(0, 0, flipperLeftUp, 16, ChainUL->data));
+	for (p2List_item<PhysBody*>* p_body = Flippers.getFirst(); p_body != nullptr; p_body = p_body->next)
+	{
+		p_body->data->physics = App->physics;
+	}
 
 	return true;
 }
