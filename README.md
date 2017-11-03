@@ -1,7 +1,7 @@
 ﻿# Metal-Pinball
 Pinball Game extracted from [https://www.classicgame.com/game/Metal+Pinball](https://www.classicgame.com/game/Metal+Pinball) for practicing Box2D physics engine.
 
-## Get our latest release [HERE](https://github.com/Jony635/Metal-Pinball/files/1439094/METAL_PINBALL_v1.1.zip)
+## Get our latest release [HERE](https://github.com/Jony635/Metal-Pinball/files/1438521/METAL_PINBALL_v1.1.zip)
 
 
 ## LICENSE
@@ -38,7 +38,7 @@ Oscar Hernández and Jonathan Molina-Prados, members of Flan Studio's programmin
 - *Left_Arrow*: Move Left Flippers.
 - *Right_Arrow*: Move Right Flippers.
 - *Space_Bar*: Shoot the Ball.
-
+- *Executable_Commands*: Use the command "godmode" to disable losing lives.
 ## Instructions
 Get a lot of points before losing all the balls
 
