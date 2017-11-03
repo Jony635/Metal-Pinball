@@ -39,6 +39,7 @@ Oscar Hernández and Jonathan Molina-Prados, members of Flan Studio's programmin
 - *Right_Arrow*: Move Right Flippers.
 - *Space_Bar*: Shoot the Ball.
 - *Executable_Commands*: Use the command "godmode" to disable losing lives.
+
 ## Instructions
 Get a lot of points before losing all the balls
 
